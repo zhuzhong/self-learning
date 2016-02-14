@@ -30,6 +30,7 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 
 import java.io.IOException;
 import java.sql.Time;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import com.zz.learning.netty5.chap12.MessageType;
@@ -68,11 +69,11 @@ public class NettyServer {
 
         // 绑定端口，同步等待成功
         ChannelFuture cf = b.bind(NettyConstant.REMOTEIP, NettyConstant.PORT).sync();
-        serverChannel = cf.channel();
+      //  serverChannel = cf.channel();
         System.out.println("Netty server start ok : " + (NettyConstant.REMOTEIP + " : " + NettyConstant.PORT));
     }
 
-    private Channel serverChannel;
+   // private Channel serverChannel;
 
     
     private void init(){
@@ -93,12 +94,15 @@ public class NettyServer {
     public static void main(String[] args) throws Exception {
        NettyServer ns= new NettyServer();
        ns.init();
-       TimeUnit.SECONDS.sleep(60);
+       TimeUnit.SECONDS.sleep(120);
        ns.tuiMessage();
     }
     
     private void tuiMessage(){
-        this.serverChannel.writeAndFlush(buildHeatBeat());
+        //this.serverChannel.writeAndFlush(buildHeatBeat());
+    	for(Map.Entry<String, Channel> client:LoginAuthRespHandler.clientChannels.entrySet()){
+    		client.getValue().writeAndFlush(buildHeatBeat());
+    	}
     }
     
     private NettyMessage buildHeatBeat() {
@@ -106,7 +110,7 @@ public class NettyServer {
         Header header = new Header();
         header.setType(MessageType.SERVICE_RESP.value());
         message.setHeader(header);
-        message.setBody("from server tui message***********");
+        message.setBody("tuittttttttttttttttttttttttttt");
         return message;
     }
     

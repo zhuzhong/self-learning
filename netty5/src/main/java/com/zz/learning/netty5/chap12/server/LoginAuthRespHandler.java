@@ -15,6 +15,7 @@
  */
 package com.zz.learning.netty5.chap12.server;
 
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
@@ -37,6 +38,8 @@ import com.zz.learning.netty5.chap12.struct.NettyMessage;
 public class LoginAuthRespHandler extends ChannelHandlerAdapter {
 
     private Map<String, Boolean> nodeCheck = new ConcurrentHashMap<String, Boolean>();
+    
+    
     private String[] whitekList = { "127.0.0.1", "192.168.1.104" };
 
     /**
@@ -70,6 +73,7 @@ public class LoginAuthRespHandler extends ChannelHandlerAdapter {
                         : buildResponse(LoginResult.lOGIN_FAILED.value());
                 if (isOK) {
                     nodeCheck.put(nodeIndex, true);
+                    clientChannels.put(nodeIndex, ctx.channel());
                 }
             }
             System.out.println("The login response is : " + loginResp + " body [" + loginResp.getBody() + "]");
@@ -79,6 +83,9 @@ public class LoginAuthRespHandler extends ChannelHandlerAdapter {
         }
     }
 
+    //客户端channel缓存
+    public final static Map<String,Channel> clientChannels=new ConcurrentHashMap<String,Channel>();
+    
     private NettyMessage buildResponse(byte result) {
         NettyMessage message = new NettyMessage();
         Header header = new Header();
@@ -91,6 +98,7 @@ public class LoginAuthRespHandler extends ChannelHandlerAdapter {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         cause.printStackTrace();
         nodeCheck.remove(ctx.channel().remoteAddress().toString());// 删除缓存
+        clientChannels.remove(ctx.channel().remoteAddress().toString());
         ctx.close();
         ctx.fireExceptionCaught(cause);
     }
