@@ -34,20 +34,26 @@ public class MarshallingEncoder {
     Marshaller marshaller;
 
     public MarshallingEncoder() throws IOException {
-	marshaller = MarshallingCodecFactory.buildMarshalling();
+        marshaller = MarshallingCodecFactory.buildMarshalling();
     }
 
+    /**
+     *  先写长度，再写入值
+     * @param msg
+     * @param out
+     * @throws Exception
+     */
     protected void encode(Object msg, ByteBuf out) throws Exception {
-	try {
-	    int lengthPos = out.writerIndex();
-	    out.writeBytes(LENGTH_PLACEHOLDER);
-	    ChannelBufferByteOutput output = new ChannelBufferByteOutput(out);
-	    marshaller.start(output);
-	    marshaller.writeObject(msg);
-	    marshaller.finish();
-	    out.setInt(lengthPos, out.writerIndex() - lengthPos - 4);
-	} finally {
-	    marshaller.close();
-	}
+        try {
+            int lengthPos = out.writerIndex(); //当前写入指针位置
+            out.writeBytes(LENGTH_PLACEHOLDER); // msg长度占位符
+            ChannelBufferByteOutput output = new ChannelBufferByteOutput(out);
+            marshaller.start(output);
+            marshaller.writeObject(msg);
+            marshaller.finish();
+            out.setInt(lengthPos, out.writerIndex() - lengthPos - 4); //msg的长度
+        } finally {
+            marshaller.close();
+        }
     }
 }

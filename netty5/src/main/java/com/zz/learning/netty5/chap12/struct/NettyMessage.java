@@ -24,6 +24,9 @@ public final class NettyMessage {
 
     private Header header;
 
+    /*
+     * 对于请求消息，它是方法的参数(只支持携带一个参数）；对于响应消息，它是返回值
+     */
     private Object body;
 
     /**

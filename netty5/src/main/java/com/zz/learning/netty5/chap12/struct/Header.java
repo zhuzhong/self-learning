@@ -25,16 +25,32 @@ import java.util.Map;
  */
 public final class Header {
 
+    /*
+     * netty消息的校验码，它由三部分构成, 0xABEF 表明该消息是netty协议消息，2个字节 ;主版本号: 1~255 1个字节;
+     * 次版本号：1~255 1个字节 ;crcCode=0xABEF+主版本号+次版本号
+     */
     private int crcCode = 0xabef0101;
 
-    private int length;// 消息长度
-
-    private long sessionID;// 会话ID
-
+    private int length;// 消息长度,整个消息包括消息头与消息体
+    /*
+     * 会话id,集群节点内全局唯一，由会话id生成器生成
+     */
+    private long sessionID;
+    /*
+     * 0 业务请求消息; 1 业务响应; 2 业务ONE WAY 消息（既是请求又是响应） 3. 握手请求消息 4.握手响应消息 5.心跳请求
+     * 6.心跳响应
+     */
     private byte type;// 消息类型
 
-    private byte priority;// 消息优先级
+    private byte priority;// 消息优先级0~255
 
+    /*
+     *  如果attachment长度为0，表示没有可选附件，则将长度编码设为0,
+     *  如果大于0，说明有附件需要编码
+     *  具体的编码规则如下：
+     *  首先对附件的个数进行编码，
+     *  然后对于key进行编码，先编码长度，再将它转换为byte数组之后编码内容，
+     */
     private Map<String, Object> attachment = new HashMap<String, Object>(); // 附件
 
     /**

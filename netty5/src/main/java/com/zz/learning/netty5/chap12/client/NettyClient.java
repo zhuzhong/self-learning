@@ -16,6 +16,7 @@
 package com.zz.learning.netty5.chap12.client;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -30,9 +31,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.zz.learning.netty5.chap12.MessageType;
 import com.zz.learning.netty5.chap12.NettyConstant;
 import com.zz.learning.netty5.chap12.codec.NettyMessageDecoder;
 import com.zz.learning.netty5.chap12.codec.NettyMessageEncoder;
+import com.zz.learning.netty5.chap12.struct.Header;
+import com.zz.learning.netty5.chap12.struct.NettyMessage;
 
 /**
  * @author Lilinfeng
@@ -41,66 +45,86 @@ import com.zz.learning.netty5.chap12.codec.NettyMessageEncoder;
  */
 public class NettyClient {
 
-    private ScheduledExecutorService executor = Executors
-	    .newScheduledThreadPool(1);
-    EventLoopGroup group = new NioEventLoopGroup();
+    private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+    private EventLoopGroup group = new NioEventLoopGroup();
 
     public void connect(int port, String host) throws Exception {
 
-	// 配置客户端NIO线程组
+        // 配置客户端NIO线程组
+        try {
+            Bootstrap b = new Bootstrap();
+            b.group(group).channel(NioSocketChannel.class).option(ChannelOption.TCP_NODELAY, true)
+                    .handler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        public void initChannel(SocketChannel ch) throws Exception {
+                            ch.pipeline().addLast(new NettyMessageDecoder(1024 * 1024));
+                            // ch.pipeline().addLast(new
+                            // NettyMessageDecoder(1024 * 1024, 4, 4));
+                            ch.pipeline().addLast("MessageEncoder", new NettyMessageEncoder());
+                            ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(50));
+                            ch.pipeline().addLast("LoginAuthHandler", new LoginAuthReqHandler());
+                            ch.pipeline().addLast("HeartBeatHandler", new HeartBeatReqHandler());
+                            ch.pipeline().addLast("businessMessageHandler", handler);
+                        }
+                    });
+            // 发起异步连接操作
+            ChannelFuture future = b.connect(new InetSocketAddress(host, port),
+                    new InetSocketAddress(NettyConstant.LOCALIP, NettyConstant.LOCAL_PORT)).sync();
+            channel = future.channel();
+            // channel.closeFuture().sync();
+            // future.channel().closeFuture().sync();
+            // return future.channel();
+        } finally {
+            // 所有资源释放完成之后，清空资源，再次发起重连操作
 
-	try {
-	    Bootstrap b = new Bootstrap();
-	    b.group(group).channel(NioSocketChannel.class)
-		    .option(ChannelOption.TCP_NODELAY, true)
-		    .handler(new ChannelInitializer<SocketChannel>() {
-			@Override
-			public void initChannel(SocketChannel ch)
-				throws Exception {
-			    ch.pipeline().addLast(
-				    new NettyMessageDecoder(1024 * 1024, 4, 4));
-			    ch.pipeline().addLast("MessageEncoder",
-				    new NettyMessageEncoder());
-			    ch.pipeline().addLast("readTimeoutHandler",
-				    new ReadTimeoutHandler(50));
-			    ch.pipeline().addLast("LoginAuthHandler",
-				    new LoginAuthReqHandler());
-			    ch.pipeline().addLast("HeartBeatHandler",
-				    new HeartBeatReqHandler());
-			}
-		    });
-	    // 发起异步连接操作
-	    ChannelFuture future = b.connect(
-		    new InetSocketAddress(host, port),
-		    new InetSocketAddress(NettyConstant.LOCALIP,
-			    NettyConstant.LOCAL_PORT)).sync();
-	    future.channel().closeFuture().sync();
-	} finally {
-	    // 所有资源释放完成之后，清空资源，再次发起重连操作
-	    executor.execute(new Runnable() {
-		@Override
-		public void run() {
-		    try {
-			TimeUnit.SECONDS.sleep(1);
-			try {
-			    connect(NettyConstant.PORT, NettyConstant.REMOTEIP);// 发起重连操作
-			} catch (Exception e) {
-			    e.printStackTrace();
-			}
-		    } catch (InterruptedException e) {
-			e.printStackTrace();
-		    }
-		}
-	    });
-	}
+           /* executor.execute(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        try {
+                            if(channel==null||!channel.isActive())
+                            connect(NettyConstant.PORT, NettyConstant.REMOTEIP);// 发起重连操作
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });*/
+
+        }
     }
+
+    private static BusinessMessageReqHandler handler = new BusinessMessageReqHandler();
+
+    private Channel channel;
 
     /**
      * @param args
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-	new NettyClient().connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
+        NettyClient client = new NettyClient();
+        client.connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
+        for (int i = 0; i < 10; i++)
+            client.sendMessage();
+        // handler.sendMessage(client.buildHeatBeat("from client test------------------------"));
+        System.in.read();
     }
 
+    private void sendMessage() {
+        channel.writeAndFlush(buildHeatBeat("from client test------------------------"));
+    }
+
+    private NettyMessage buildHeatBeat(String body) {
+        NettyMessage message = new NettyMessage();
+        Header header = new Header();
+        header.setType(MessageType.SERVICE_REQ.value());
+        message.setHeader(header);
+        message.setBody(body);
+        return message;
+    }
 }

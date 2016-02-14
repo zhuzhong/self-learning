@@ -41,21 +41,30 @@ public class MarshallingDecoder {
      * 
      */
     public MarshallingDecoder() throws IOException {
-	unmarshaller = MarshallingCodecFactory.buildUnMarshalling();
+        unmarshaller = MarshallingCodecFactory.buildUnMarshalling();
     }
 
+    /**
+     * 先读长度，再读取值
+     * @param in
+     * @return
+     * @throws Exception
+     */
     protected Object decode(ByteBuf in) throws Exception {
-	int objectSize = in.readInt();
-	ByteBuf buf = in.slice(in.readerIndex(), objectSize);
-	ByteInput input = new ChannelBufferByteInput(buf);
-	try {
-	    unmarshaller.start(input);
-	    Object obj = unmarshaller.readObject();
-	    unmarshaller.finish();
-	    in.readerIndex(in.readerIndex() + objectSize);
-	    return obj;
-	} finally {
-	    unmarshaller.close();
-	}
+        int objectSize = in.readInt();
+        /*
+         * 返回当前ByteBuf的可读子缓冲区，但是读写索引独立维护
+         */
+        ByteBuf buf = in.slice(in.readerIndex(), objectSize);
+        ByteInput input = new ChannelBufferByteInput(buf);
+        try {
+            unmarshaller.start(input);
+            Object obj = unmarshaller.readObject();
+            unmarshaller.finish();
+            in.readerIndex(in.readerIndex() + objectSize); //更新读索引
+            return obj;
+        } finally {
+            unmarshaller.close();
+        }
     }
 }

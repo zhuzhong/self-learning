@@ -35,11 +35,18 @@ public class NettyMessageDecoder extends LengthFieldBasedFrameDecoder {
 
     MarshallingDecoder marshallingDecoder;
 
-    public NettyMessageDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength) throws IOException {
-        super(maxFrameLength, lengthFieldOffset, lengthFieldLength);
+    public NettyMessageDecoder(int maxFrameLength//, int lengthFieldOffset, int lengthFieldLength
+            ) throws IOException {
+        super(maxFrameLength, 4 ,4);
         marshallingDecoder = new MarshallingDecoder();
     }
 
+    
+    
+    /*public NettyMessageDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength) throws IOException {
+        super(maxFrameLength, lengthFieldOffset, lengthFieldLength);
+        marshallingDecoder = new MarshallingDecoder();
+    }*/
     @Override
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
         ByteBuf frame = (ByteBuf) super.decode(ctx, in);
@@ -55,14 +62,14 @@ public class NettyMessageDecoder extends LengthFieldBasedFrameDecoder {
         header.setType(frame.readByte());
         header.setPriority(frame.readByte());
 
-        int size = frame.readInt(); //attachment的长度
+        int size = frame.readInt(); // attachment的长度
         if (size > 0) {
             Map<String, Object> attch = new HashMap<String, Object>(size);
             int keySize = 0;
             byte[] keyArray = null;
             String key = null;
             for (int i = 0; i < size; i++) {
-                keySize = frame.readInt(); //key长度
+                keySize = frame.readInt(); // key长度
                 keyArray = new byte[keySize];
                 frame.readBytes(keyArray);
                 key = new String(keyArray, "UTF-8");
@@ -73,6 +80,7 @@ public class NettyMessageDecoder extends LengthFieldBasedFrameDecoder {
             header.setAttachment(attch);
         }
         if (frame.readableBytes() > 4) {
+              //如果不大于4，则表明没有消息体，当没有消息体时则写一个长度0，表明没有长度
             message.setBody(marshallingDecoder.decode(frame));
         }
         message.setHeader(header);
