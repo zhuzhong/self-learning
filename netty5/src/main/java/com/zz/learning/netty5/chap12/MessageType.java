@@ -8,7 +8,7 @@ package com.zz.learning.netty5.chap12;
  *
  */
 public enum MessageType {
-    LOGIN_RESP, LOGIN_REQ;
+    LOGIN_RESP, LOGIN_REQ, HEARTBEAT_RESP, HEARTBEAT_REQ;
 
     /**
      * @return
