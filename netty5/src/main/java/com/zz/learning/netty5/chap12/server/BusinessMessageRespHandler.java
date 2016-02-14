@@ -20,9 +20,9 @@ public class BusinessMessageRespHandler extends ChannelHandlerAdapter {
         NettyMessage message = (NettyMessage) msg;
         // 返回心跳应答消息
         if (message.getHeader() != null && message.getHeader().getType() == MessageType.SERVICE_REQ.value()) {
-            System.out.println("&&&&&&&&&Receive client service message : ---> " + message);
+            System.out.println("&&&&&&&&&Receive client business service message : ---> " + message);
             NettyMessage heartBeat = buildHeatBeat();
-            System.out.println("&&&&&&&&Send service response message to client : ---> " + heartBeat);
+            System.out.println("&&&&&&&&Send service response business message to client : ---> " + heartBeat);
             ctx.writeAndFlush(heartBeat);
         } else {
             ctx.fireChannelRead(msg);

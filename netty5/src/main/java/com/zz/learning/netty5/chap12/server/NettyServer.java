@@ -16,6 +16,8 @@
 package com.zz.learning.netty5.chap12.server;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -27,10 +29,15 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.util.concurrent.TimeUnit;
 
+import com.zz.learning.netty5.chap12.MessageType;
 import com.zz.learning.netty5.chap12.NettyConstant;
 import com.zz.learning.netty5.chap12.codec.NettyMessageDecoder;
 import com.zz.learning.netty5.chap12.codec.NettyMessageEncoder;
+import com.zz.learning.netty5.chap12.struct.Header;
+import com.zz.learning.netty5.chap12.struct.NettyMessage;
 
 /**
  * @author Lilinfeng
@@ -39,7 +46,7 @@ import com.zz.learning.netty5.chap12.codec.NettyMessageEncoder;
  */
 public class NettyServer {
 
-    public void bind() throws Exception {
+    private void bind() throws Exception {
         // 配置服务端的NIO线程组
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -49,7 +56,8 @@ public class NettyServer {
                     @Override
                     public void initChannel(SocketChannel ch) throws IOException {
                         ch.pipeline().addLast(new NettyMessageDecoder(1024 * 1024));
-                        //ch.pipeline().addLast(new NettyMessageDecoder(1024 * 1024, 4, 4));
+                        // ch.pipeline().addLast(new NettyMessageDecoder(1024 *
+                        // 1024, 4, 4));
                         ch.pipeline().addLast(new NettyMessageEncoder());
                         ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(50));
                         ch.pipeline().addLast(new LoginAuthRespHandler());
@@ -59,11 +67,47 @@ public class NettyServer {
                 });
 
         // 绑定端口，同步等待成功
-        b.bind(NettyConstant.REMOTEIP, NettyConstant.PORT).sync();
+        ChannelFuture cf = b.bind(NettyConstant.REMOTEIP, NettyConstant.PORT).sync();
+        serverChannel = cf.channel();
         System.out.println("Netty server start ok : " + (NettyConstant.REMOTEIP + " : " + NettyConstant.PORT));
     }
 
-    public static void main(String[] args) throws Exception {
-        new NettyServer().bind();
+    private Channel serverChannel;
+
+    
+    private void init(){
+        new Thread(new Runnable() {
+            
+            @Override
+            public void run() {
+                try {
+                    bind();
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                
+            }
+        }).start();
     }
+    public static void main(String[] args) throws Exception {
+       NettyServer ns= new NettyServer();
+       ns.init();
+       TimeUnit.SECONDS.sleep(60);
+       ns.tuiMessage();
+    }
+    
+    private void tuiMessage(){
+        this.serverChannel.writeAndFlush(buildHeatBeat());
+    }
+    
+    private NettyMessage buildHeatBeat() {
+        NettyMessage message = new NettyMessage();
+        Header header = new Header();
+        header.setType(MessageType.SERVICE_RESP.value());
+        message.setHeader(header);
+        message.setBody("from server tui message***********");
+        return message;
+    }
+    
 }

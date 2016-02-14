@@ -66,6 +66,6 @@ public final class NettyMessage {
      */
     @Override
     public String toString() {
-        return "NettyMessage [header=" + header + "]";
+        return "NettyMessage [body=" + body + ",header=" + header + "]";
     }
 }

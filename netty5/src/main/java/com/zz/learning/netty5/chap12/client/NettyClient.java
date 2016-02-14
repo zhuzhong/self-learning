@@ -64,43 +64,87 @@ public class NettyClient {
                             ch.pipeline().addLast("readTimeoutHandler", new ReadTimeoutHandler(50));
                             ch.pipeline().addLast("LoginAuthHandler", new LoginAuthReqHandler());
                             ch.pipeline().addLast("HeartBeatHandler", new HeartBeatReqHandler());
-                            ch.pipeline().addLast("businessMessageHandler", handler);
+                            ch.pipeline().addLast("businessMessageHandler", new BusinessMessageReqHandler());
                         }
                     });
             // 发起异步连接操作
             ChannelFuture future = b.connect(new InetSocketAddress(host, port),
                     new InetSocketAddress(NettyConstant.LOCALIP, NettyConstant.LOCAL_PORT)).sync();
             channel = future.channel();
-            // channel.closeFuture().sync();
+            channel.closeFuture().sync();
             // future.channel().closeFuture().sync();
             // return future.channel();
         } finally {
             // 所有资源释放完成之后，清空资源，再次发起重连操作
 
-           /* executor.execute(new Runnable() {
-
-                @Override
-                public void run() {
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                        try {
-                            if(channel==null||!channel.isActive())
-                            connect(NettyConstant.PORT, NettyConstant.REMOTEIP);// 发起重连操作
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });*/
+            /*
+             * executor.execute(new Runnable() {
+             * 
+             * @Override public void run() { try { TimeUnit.SECONDS.sleep(1);
+             * try { if(channel==null||!channel.isActive())
+             * connect(NettyConstant.PORT, NettyConstant.REMOTEIP);// 发起重连操作 }
+             * catch (Exception e) { e.printStackTrace(); } } catch
+             * (InterruptedException e) { e.printStackTrace(); } } });
+             */
 
         }
     }
 
-    private static BusinessMessageReqHandler handler = new BusinessMessageReqHandler();
+    // private static BusinessMessageReqHandler handler = new
+    // BusinessMessageReqHandler();
 
     private Channel channel;
+
+    private void init() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                    // executor.execute(new Runnable() {
+                    //
+                    // @Override
+                    // public void run() {
+                    // try {
+                    // TimeUnit.SECONDS.sleep(1);
+                    // try {
+                    // if(channel==null||!channel.isActive())
+                    // connect(NettyConstant.PORT, NettyConstant.REMOTEIP);//
+                    // 发起重连操作
+                    // } catch (Exception e) {
+                    // e.printStackTrace();
+                    // }
+                    // } catch (InterruptedException e) {
+                    // e.printStackTrace();
+                    // }
+                    // }
+                    // });
+                } finally {
+                    executor.execute(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            try {
+                                TimeUnit.SECONDS.sleep(1);
+                                try {
+                                    if (channel == null || !channel.isActive())
+                                        connect(NettyConstant.PORT, NettyConstant.REMOTEIP);// 发起重连操作
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+
+            }
+        }).start();
+    }
 
     /**
      * @param args
@@ -108,11 +152,15 @@ public class NettyClient {
      */
     public static void main(String[] args) throws Exception {
         NettyClient client = new NettyClient();
-        client.connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
-        for (int i = 0; i < 10; i++)
+        // client.connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
+        client.init();
+        TimeUnit.SECONDS.sleep(10);
+        for (int i = 0; i < 10; i++) {
             client.sendMessage();
+            TimeUnit.SECONDS.sleep(i * 5);
+        }
         // handler.sendMessage(client.buildHeatBeat("from client test------------------------"));
-        System.in.read();
+
     }
 
     private void sendMessage() {
