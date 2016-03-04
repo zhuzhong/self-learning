@@ -19,7 +19,7 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.example.telnet.TelnetServer;
+//import io.netty.example.telnet.TelnetServer;
 
 /**
  * Simple SSL chat server modified from {@link TelnetServer}.
