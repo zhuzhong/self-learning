@@ -25,6 +25,8 @@ import java.io.StringWriter;
 //import org.jibx.runtime.IUnmarshallingContext;
 //import org.jibx.runtime.JiBXException;
 
+
+import com.alibaba.fastjson.JSON;
 import com.zz.learning.netty5.chap10.xml.pojo.Order;
 import com.zz.learning.netty5.chap10.xml.pojo.OrderFactory;
 
@@ -67,4 +69,15 @@ public class TestOrder {
 //        System.out.println(order2);
 //
 //    }
+    
+    
+    public static void main(String args[]){
+        Order o=OrderFactory.create(10000000L);
+        String s=JSON.toJSONString(o,true);
+        System.out.println(s);
+        
+        System.out.println("------------------------------");
+        Order o2=JSON.parseObject(s, Order.class);
+        System.out.println(o2);
+    }
 }

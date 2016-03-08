@@ -24,6 +24,7 @@ import io.netty.handler.codec.MessageToMessageEncoder;
 
 import java.nio.charset.Charset;
 
+import com.alibaba.fastjson.JSON;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -50,8 +51,13 @@ public abstract class AbstractHttpXmlEncoder<T> extends MessageToMessageEncoder<
          * = Unpooled.copiedBuffer(xmlStr, UTF_8); return encodeBuf;
          */
 
-        String xmlStr = stream.toXML(order);
+/*        String xmlStr = stream.toXML(order);
         ByteBuf encodeBuf = Unpooled.copiedBuffer(xmlStr, UTF_8);
+        return encodeBuf;*/
+        
+        String s=JSON.toJSONString(order);
+        System.out.println(s);
+        ByteBuf encodeBuf = Unpooled.copiedBuffer(s, UTF_8);
         return encodeBuf;
     }
 

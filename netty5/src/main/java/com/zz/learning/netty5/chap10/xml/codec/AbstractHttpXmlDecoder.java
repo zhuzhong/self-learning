@@ -24,8 +24,10 @@ import io.netty.handler.codec.MessageToMessageDecoder;
 import java.io.StringReader;
 import java.nio.charset.Charset;
 
+import com.alibaba.fastjson.JSON;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.zz.learning.netty5.chap10.xml.pojo.Order;
 
 /**
  * @author Lilinfeng
@@ -63,10 +65,16 @@ public abstract class AbstractHttpXmlDecoder<T> extends MessageToMessageDecoder<
          * result;
          */
 
-        String orderStr = body.toString(UTF_8);
+/*        String orderStr = body.toString(UTF_8);
 
         System.out.println("The body is : " + orderStr);
-        return stream.fromXML(orderStr);
+        return stream.fromXML(orderStr);*/
+        String s = body.toString(UTF_8);
+        if(isPrint){
+            System.out.println(s);
+        }
+        Object  o2=JSON.parseObject(s, clazz);
+       return o2;
     }
 
     /**
