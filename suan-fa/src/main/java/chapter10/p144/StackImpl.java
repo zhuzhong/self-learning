@@ -4,7 +4,7 @@
 package chapter10.p144;
 
 /**
- * Õ»ÊµÏÖ ÏÈ½øºó³öµÄÊµÏÖ»úÖÆ
+ * æ ˆå®ç° å…ˆè¿›åå‡ºçš„å®ç°æœºåˆ¶
  * 
  * @author snoopy
  *
@@ -12,7 +12,7 @@ package chapter10.p144;
 public class StackImpl {
 
 	private static String[] str;
-	private int top = 0;// µ±Ç°Õ»¶¥Î»ÖÃ
+	private int top = 0;// å½“å‰æ ˆé¡¶ä½ç½®
 	private final int max_size;
 
 	public StackImpl() {

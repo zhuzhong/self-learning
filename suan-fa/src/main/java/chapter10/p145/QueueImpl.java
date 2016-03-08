@@ -4,7 +4,7 @@
 package chapter10.p145;
 
 /**
- * ¶ÓÁÐÊµÏÖ£¬ÏÈ½øÏÈ³öÊµÏÖ»úÖÆ
+ * é˜Ÿåˆ—å®žçŽ°ï¼Œå…ˆè¿›å…ˆå‡ºå®žçŽ°æœºåˆ¶
  * 
  * @author snoopy
  *
@@ -26,7 +26,7 @@ public class QueueImpl {
 		this(100);
 	}
 
-	// Èë¶Ó
+	// å…¥é˜Ÿ
 	public synchronized boolean enqueue(String s) {
 		if (tail >= max_size) {
 			return false;
@@ -35,19 +35,18 @@ public class QueueImpl {
 		tail++;
 		return true;
 	}
-	//³ö¶Ó
-	public synchronized String dequeue(){
-		String str=null;
-		if(head<tail){
-			str=Q[head];
-		}		 
-		head++;	
-		if(head==max_size){
-			head=0;
+
+	// å‡ºé˜Ÿ
+	public synchronized String dequeue() {
+		String str = null;
+		if (head < tail) {
+			str = Q[head];
+		}
+		head++;
+		if (head == max_size) {
+			head = 0;
 		}
 		return str;
 	}
-	
-	
-	
+
 }
