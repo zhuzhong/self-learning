@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phei.netty.protocol.http.xml.codec;
+package com.zz.learning.netty5.chap10.xml.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -22,37 +22,38 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.MessageToMessageEncoder;
 
-import java.io.StringWriter;
 import java.nio.charset.Charset;
 
-import org.jibx.runtime.BindingDirectory;
-import org.jibx.runtime.IBindingFactory;
-import org.jibx.runtime.IMarshallingContext;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
  * @author Administrator
  * @date 2014年3月1日
  * @version 1.0
  */
-public abstract class AbstractHttpXmlEncoder<T> extends
-	MessageToMessageEncoder<T> {
-    IBindingFactory factory = null;
-    StringWriter writer = null;
+public abstract class AbstractHttpXmlEncoder<T> extends MessageToMessageEncoder<T> {
+   /* IBindingFactory factory = null;
+    StringWriter writer = null;*/
     final static String CHARSET_NAME = "UTF-8";
     final static Charset UTF_8 = Charset.forName(CHARSET_NAME);
-
-    protected ByteBuf encode0(ChannelHandlerContext ctx, Object body)
-	    throws Exception {
-	factory = BindingDirectory.getFactory(body.getClass());
-	writer = new StringWriter();
-	IMarshallingContext mctx = factory.createMarshallingContext();
-	mctx.setIndent(2);
-	mctx.marshalDocument(body, CHARSET_NAME, null, writer);
-	String xmlStr = writer.toString();
-	writer.close();
-	writer = null;
-	ByteBuf encodeBuf = Unpooled.copiedBuffer(xmlStr, UTF_8);
-	return encodeBuf;
+    XStream stream = new XStream(new DomDriver("utf-8"));
+    protected ByteBuf encode0(ChannelHandlerContext ctx, Object body) throws Exception {
+        /*factory = BindingDirectory.getFactory(body.getClass());
+        writer = new StringWriter();
+        IMarshallingContext mctx = factory.createMarshallingContext();
+        mctx.setIndent(2);
+        mctx.marshalDocument(body, CHARSET_NAME, null, writer);
+        String xmlStr = writer.toString();
+        writer.close();
+        writer = null;
+        ByteBuf encodeBuf = Unpooled.copiedBuffer(xmlStr, UTF_8);
+        return encodeBuf;
+        */
+        
+        String xmlStr = stream.toXML(body);
+        ByteBuf encodeBuf = Unpooled.copiedBuffer(xmlStr, UTF_8);
+        return encodeBuf;
     }
 
     /**
@@ -64,13 +65,12 @@ public abstract class AbstractHttpXmlEncoder<T> extends
      */
     @Skip
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
-	    throws Exception {
-	// 释放资源
-	if (writer != null) {
-	    writer.close();
-	    writer = null;
-	}
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        // 释放资源
+       /* if (writer != null) {
+            writer.close();
+            writer = null;
+        }*/
     }
 
 }

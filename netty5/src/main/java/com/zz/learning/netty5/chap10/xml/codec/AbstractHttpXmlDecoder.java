@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phei.netty.protocol.http.xml.codec;
+package com.zz.learning.netty5.chap10.xml.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
@@ -24,46 +24,51 @@ import io.netty.handler.codec.MessageToMessageDecoder;
 import java.io.StringReader;
 import java.nio.charset.Charset;
 
-import org.jibx.runtime.BindingDirectory;
-import org.jibx.runtime.IBindingFactory;
-import org.jibx.runtime.IUnmarshallingContext;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /**
  * @author Lilinfeng
  * @date 2014年3月1日
  * @version 1.0
  */
-public abstract class AbstractHttpXmlDecoder<T> extends
-	MessageToMessageDecoder<T> {
+public abstract class AbstractHttpXmlDecoder<T> extends MessageToMessageDecoder<T> {
 
-    private IBindingFactory factory;
-    private StringReader reader;
+   // private IBindingFactory factory;
+//    private StringReader reader;
     private Class<?> clazz;
     private boolean isPrint;
     private final static String CHARSET_NAME = "UTF-8";
     private final static Charset UTF_8 = Charset.forName(CHARSET_NAME);
 
+    
+    XStream stream = new XStream(new DomDriver("utf-8"));
     protected AbstractHttpXmlDecoder(Class<?> clazz) {
-	this(clazz, false);
+        this(clazz, false);
     }
 
     protected AbstractHttpXmlDecoder(Class<?> clazz, boolean isPrint) {
-	this.clazz = clazz;
-	this.isPrint = isPrint;
+        this.clazz = clazz;
+        this.isPrint = isPrint;
     }
 
-    protected Object decode0(ChannelHandlerContext arg0, ByteBuf body)
-	    throws Exception {
-	factory = BindingDirectory.getFactory(clazz);
-	String content = body.toString(UTF_8);
-	if (isPrint)
-	    System.out.println("The body is : " + content);
-	reader = new StringReader(content);
-	IUnmarshallingContext uctx = factory.createUnmarshallingContext();
-	Object result = uctx.unmarshalDocument(reader);
-	reader.close();
-	reader = null;
-	return result;
+    protected Object decode0(ChannelHandlerContext arg0, ByteBuf body) throws Exception {
+    /*    factory = BindingDirectory.getFactory(clazz);
+        String content = body.toString(UTF_8);
+        if (isPrint)
+            System.out.println("The body is : " + content);
+        reader = new StringReader(content);
+        IUnmarshallingContext uctx = factory.createUnmarshallingContext();
+        Object result = uctx.unmarshalDocument(reader);
+        reader.close();
+        reader = null;
+        return result;*/
+        
+
+        String orderStr = body.toString(UTF_8);
+        
+        System.out.println("The body is : " + orderStr);
+        return stream.fromXML(orderStr);
     }
 
     /**
@@ -75,12 +80,11 @@ public abstract class AbstractHttpXmlDecoder<T> extends
      */
     @Skip
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
-	    throws Exception {
-	// 释放资源
-	if (reader != null) {
-	    reader.close();
-	    reader = null;
-	}
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        // 释放资源
+//        if (reader != null) {
+//            reader.close();
+//            reader = null;
+//        }
     }
 }

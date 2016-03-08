@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phei.netty.protocol.http.xml.codec;
+package com.zz.learning.netty5.chap10.xml.codec;
 
 import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
 import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
@@ -34,35 +34,30 @@ import java.util.List;
  * @date 2014年3月1日
  * @version 1.0
  */
-public class HttpXmlRequestDecoder extends
-	AbstractHttpXmlDecoder<FullHttpRequest> {
+public class HttpXmlRequestDecoder extends AbstractHttpXmlDecoder<FullHttpRequest> {
 
     public HttpXmlRequestDecoder(Class<?> clazz) {
-	this(clazz, false);
+        this(clazz, false);
     }
 
     public HttpXmlRequestDecoder(Class<?> clazz, boolean isPrint) {
-	super(clazz, isPrint);
+        super(clazz, isPrint);
     }
 
     @Override
-    protected void decode(ChannelHandlerContext arg0, FullHttpRequest arg1,
-	    List<Object> arg2) throws Exception {
-	if (!arg1.getDecoderResult().isSuccess()) {
-	    sendError(arg0, BAD_REQUEST);
-	    return;
-	}
-	HttpXmlRequest request = new HttpXmlRequest(arg1, decode0(arg0,
-		arg1.content()));
-	arg2.add(request);
+    protected void decode(ChannelHandlerContext arg0, FullHttpRequest arg1, List<Object> arg2) throws Exception {
+        if (!arg1.getDecoderResult().isSuccess()) {
+            sendError(arg0, BAD_REQUEST);
+            return;
+        }
+        HttpXmlRequest request = new HttpXmlRequest(arg1, decode0(arg0, arg1.content()));
+        arg2.add(request);
     }
 
-    private static void sendError(ChannelHandlerContext ctx,
-	    HttpResponseStatus status) {
-	FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1,
-		status, Unpooled.copiedBuffer("Failure: " + status.toString()
-			+ "\r\n", CharsetUtil.UTF_8));
-	response.headers().set(CONTENT_TYPE, "text/plain; charset=UTF-8");
-	ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+    private static void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) {
+        FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, status, Unpooled.copiedBuffer("Failure: "
+                + status.toString() + "\r\n", CharsetUtil.UTF_8));
+        response.headers().set(CONTENT_TYPE, "text/plain; charset=UTF-8");
+        ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
     }
 }

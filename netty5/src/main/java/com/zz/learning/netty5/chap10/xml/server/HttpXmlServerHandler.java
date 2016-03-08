@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phei.netty.protocol.http.xml.server;
+package com.zz.learning.netty5.chap10.xml.server;
 
 import static io.netty.handler.codec.http.HttpHeaders.isKeepAlive;
 import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
@@ -35,10 +35,10 @@ import io.netty.util.concurrent.GenericFutureListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.phei.netty.protocol.http.xml.codec.HttpXmlRequest;
-import com.phei.netty.protocol.http.xml.codec.HttpXmlResponse;
-import com.phei.netty.protocol.http.xml.pojo.Address;
-import com.phei.netty.protocol.http.xml.pojo.Order;
+import com.zz.learning.netty5.chap10.xml.codec.HttpXmlRequest;
+import com.zz.learning.netty5.chap10.xml.codec.HttpXmlResponse;
+import com.zz.learning.netty5.chap10.xml.pojo.Address;
+import com.zz.learning.netty5.chap10.xml.pojo.Order;
 
 /**
  * @author lilinfeng

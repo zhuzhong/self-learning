@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phei.netty.protocol.http.xml.client;
+package com.zz.learning.netty5.chap10.xml.client;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-import com.phei.netty.protocol.http.xml.codec.HttpXmlRequest;
-import com.phei.netty.protocol.http.xml.codec.HttpXmlResponse;
-import com.phei.netty.protocol.http.xml.pojo.OrderFactory;
+import com.zz.learning.netty5.chap10.xml.codec.HttpXmlRequest;
+import com.zz.learning.netty5.chap10.xml.codec.HttpXmlResponse;
+import com.zz.learning.netty5.chap10.xml.pojo.OrderFactory;
 
 /**
  * @author Administrator

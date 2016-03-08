@@ -1,4 +1,4 @@
-package com.phei.netty.protocol.http.xml.pojo;
+package com.zz.learning.netty5.chap10.xml.pojo;
 
 /**
  * Address information.

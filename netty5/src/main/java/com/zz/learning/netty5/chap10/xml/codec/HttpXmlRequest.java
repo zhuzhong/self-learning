@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phei.netty.protocol.http.xml.codec;
+package com.zz.learning.netty5.chap10.xml.codec;
 
 import io.netty.handler.codec.http.FullHttpRequest;
 
@@ -28,15 +28,15 @@ public class HttpXmlRequest {
     private Object body;
 
     public HttpXmlRequest(FullHttpRequest request, Object body) {
-	this.request = request;
-	this.body = body;
+        this.request = request;
+        this.body = body;
     }
 
     /**
      * @return the request
      */
     public final FullHttpRequest getRequest() {
-	return request;
+        return request;
     }
 
     /**
@@ -44,14 +44,14 @@ public class HttpXmlRequest {
      *            the request to set
      */
     public final void setRequest(FullHttpRequest request) {
-	this.request = request;
+        this.request = request;
     }
 
     /**
      * @return the object
      */
     public final Object getBody() {
-	return body;
+        return body;
     }
 
     /**
@@ -59,7 +59,7 @@ public class HttpXmlRequest {
      *            the object to set
      */
     public final void setBody(Object body) {
-	this.body = body;
+        this.body = body;
     }
 
     /*
@@ -69,6 +69,6 @@ public class HttpXmlRequest {
      */
     @Override
     public String toString() {
-	return "HttpXmlRequest [request=" + request + ", body =" + body + "]";
+        return "HttpXmlRequest [request=" + request + ", body =" + body + "]";
     }
 }
