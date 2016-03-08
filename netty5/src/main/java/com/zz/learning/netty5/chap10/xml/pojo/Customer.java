@@ -18,35 +18,35 @@ public class Customer {
     private List<String> middleNames;
 
     public long getCustomerNumber() {
-	return customerNumber;
+        return customerNumber;
     }
 
     public void setCustomerNumber(long customerId) {
-	this.customerNumber = customerId;
+        this.customerNumber = customerId;
     }
 
     public String getFirstName() {
-	return firstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-	this.firstName = firstName;
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-	return lastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-	this.lastName = lastName;
+        this.lastName = lastName;
     }
 
     public List<String> getMiddleNames() {
-	return middleNames;
+        return middleNames;
     }
 
     public void setMiddleNames(List<String> middleNames) {
-	this.middleNames = middleNames;
+        this.middleNames = middleNames;
     }
 
     /*
@@ -56,9 +56,8 @@ public class Customer {
      */
     @Override
     public String toString() {
-	return "Customer [customerNumber=" + customerNumber + ", firstName="
-		+ firstName + ", lastName=" + lastName + ", middleNames="
-		+ middleNames + "]";
+        return "Customer [customerNumber=" + customerNumber + ", firstName=" + firstName + ", lastName=" + lastName
+                + ", middleNames=" + middleNames + "]";
     }
 
 }

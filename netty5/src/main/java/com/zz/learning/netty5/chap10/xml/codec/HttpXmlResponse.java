@@ -27,15 +27,15 @@ public class HttpXmlResponse {
     private Object result;
 
     public HttpXmlResponse(FullHttpResponse httpResponse, Object result) {
-	this.httpResponse = httpResponse;
-	this.result = result;
+        this.httpResponse = httpResponse;
+        this.result = result;
     }
 
     /**
      * @return the httpResponse
      */
     public final FullHttpResponse getHttpResponse() {
-	return httpResponse;
+        return httpResponse;
     }
 
     /**
@@ -43,14 +43,14 @@ public class HttpXmlResponse {
      *            the httpResponse to set
      */
     public final void setHttpResponse(FullHttpResponse httpResponse) {
-	this.httpResponse = httpResponse;
+        this.httpResponse = httpResponse;
     }
 
     /**
      * @return the body
      */
     public final Object getResult() {
-	return result;
+        return result;
     }
 
     /**
@@ -58,7 +58,7 @@ public class HttpXmlResponse {
      *            the body to set
      */
     public final void setResult(Object result) {
-	this.result = result;
+        this.result = result;
     }
 
     /*
@@ -68,8 +68,7 @@ public class HttpXmlResponse {
      */
     @Override
     public String toString() {
-	return "HttpXmlResponse [httpResponse=" + httpResponse + ", result="
-		+ result + "]";
+        return "HttpXmlResponse [httpResponse=" + httpResponse + ", result=" + result + "]";
     }
 
 }

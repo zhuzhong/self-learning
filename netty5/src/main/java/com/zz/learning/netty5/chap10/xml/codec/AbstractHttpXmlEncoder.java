@@ -33,25 +33,24 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
  * @version 1.0
  */
 public abstract class AbstractHttpXmlEncoder<T> extends MessageToMessageEncoder<T> {
-   /* IBindingFactory factory = null;
-    StringWriter writer = null;*/
+    /*
+     * IBindingFactory factory = null; StringWriter writer = null;
+     */
     final static String CHARSET_NAME = "UTF-8";
     final static Charset UTF_8 = Charset.forName(CHARSET_NAME);
     XStream stream = new XStream(new DomDriver("utf-8"));
-    protected ByteBuf encode0(ChannelHandlerContext ctx, Object body) throws Exception {
-        /*factory = BindingDirectory.getFactory(body.getClass());
-        writer = new StringWriter();
-        IMarshallingContext mctx = factory.createMarshallingContext();
-        mctx.setIndent(2);
-        mctx.marshalDocument(body, CHARSET_NAME, null, writer);
-        String xmlStr = writer.toString();
-        writer.close();
-        writer = null;
-        ByteBuf encodeBuf = Unpooled.copiedBuffer(xmlStr, UTF_8);
-        return encodeBuf;
-        */
-        
-        String xmlStr = stream.toXML(body);
+
+    protected ByteBuf encode0(ChannelHandlerContext ctx, Object order) throws Exception {
+        /*
+         * factory = BindingDirectory.getFactory(body.getClass()); writer = new
+         * StringWriter(); IMarshallingContext mctx =
+         * factory.createMarshallingContext(); mctx.setIndent(2);
+         * mctx.marshalDocument(body, CHARSET_NAME, null, writer); String xmlStr
+         * = writer.toString(); writer.close(); writer = null; ByteBuf encodeBuf
+         * = Unpooled.copiedBuffer(xmlStr, UTF_8); return encodeBuf;
+         */
+
+        String xmlStr = stream.toXML(order);
         ByteBuf encodeBuf = Unpooled.copiedBuffer(xmlStr, UTF_8);
         return encodeBuf;
     }
@@ -67,10 +66,9 @@ public abstract class AbstractHttpXmlEncoder<T> extends MessageToMessageEncoder<
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         // 释放资源
-       /* if (writer != null) {
-            writer.close();
-            writer = null;
-        }*/
+        /*
+         * if (writer != null) { writer.close(); writer = null; }
+         */
     }
 
 }

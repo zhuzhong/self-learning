@@ -34,15 +34,15 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
  */
 public abstract class AbstractHttpXmlDecoder<T> extends MessageToMessageDecoder<T> {
 
-   // private IBindingFactory factory;
-//    private StringReader reader;
+    // private IBindingFactory factory;
+    // private StringReader reader;
     private Class<?> clazz;
     private boolean isPrint;
     private final static String CHARSET_NAME = "UTF-8";
     private final static Charset UTF_8 = Charset.forName(CHARSET_NAME);
 
-    
     XStream stream = new XStream(new DomDriver("utf-8"));
+
     protected AbstractHttpXmlDecoder(Class<?> clazz) {
         this(clazz, false);
     }
@@ -53,20 +53,18 @@ public abstract class AbstractHttpXmlDecoder<T> extends MessageToMessageDecoder<
     }
 
     protected Object decode0(ChannelHandlerContext arg0, ByteBuf body) throws Exception {
-    /*    factory = BindingDirectory.getFactory(clazz);
-        String content = body.toString(UTF_8);
-        if (isPrint)
-            System.out.println("The body is : " + content);
-        reader = new StringReader(content);
-        IUnmarshallingContext uctx = factory.createUnmarshallingContext();
-        Object result = uctx.unmarshalDocument(reader);
-        reader.close();
-        reader = null;
-        return result;*/
-        
+        /*
+         * factory = BindingDirectory.getFactory(clazz); String content =
+         * body.toString(UTF_8); if (isPrint)
+         * System.out.println("The body is : " + content); reader = new
+         * StringReader(content); IUnmarshallingContext uctx =
+         * factory.createUnmarshallingContext(); Object result =
+         * uctx.unmarshalDocument(reader); reader.close(); reader = null; return
+         * result;
+         */
 
         String orderStr = body.toString(UTF_8);
-        
+
         System.out.println("The body is : " + orderStr);
         return stream.fromXML(orderStr);
     }
@@ -82,9 +80,9 @@ public abstract class AbstractHttpXmlDecoder<T> extends MessageToMessageDecoder<
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         // 释放资源
-//        if (reader != null) {
-//            reader.close();
-//            reader = null;
-//        }
+        // if (reader != null) {
+        // reader.close();
+        // reader = null;
+        // }
     }
 }
