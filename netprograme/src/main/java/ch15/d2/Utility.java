@@ -16,10 +16,10 @@ public class Utility {
     }
 
     public static void log(String sMsg) {
-        System.err.println(sMsg);
+        System.out.println(sMsg);
     }
 
     public static void log(int sMsg) {
-        System.err.println(sMsg);
+        System.out.println(sMsg);
     }
 }
