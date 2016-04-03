@@ -9,10 +9,10 @@ public class SiteInfoBean {
 	private String sFileName; // Saved File's Name
 	private int nSplitter; // Count of Splited Downloading File
 
-	public SiteInfoBean() {
-		// default value of nSplitter is 5
-		this("", "", "", 5);
-	}
+//	public SiteInfoBean() {
+//		// default value of nSplitter is 5
+//		this("", "", "", 5);
+//	}
 
 	public SiteInfoBean(String sURL, String sPath, String sName, int nSpiltter) {
 		sSiteURL = sURL;

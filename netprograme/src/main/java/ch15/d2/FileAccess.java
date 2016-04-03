@@ -2,15 +2,15 @@ package ch15.d2;
 
 import java.io.*;
 
-public class FileAccessI implements Serializable {
+public class FileAccess implements Serializable {
     RandomAccessFile oSavedFile;
     long nPos;
 
-    public FileAccessI() throws IOException {
-        this("", 0);
-    }
+//    public FileAccessI() throws IOException {
+//        this("", 0);
+//    }
 
-    public FileAccessI(String sName, long nPos) throws IOException {
+    public FileAccess(String sName, long nPos) throws IOException {
         oSavedFile = new RandomAccessFile(sName, "rw");
         this.nPos = nPos;
         oSavedFile.seek(nPos);

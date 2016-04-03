@@ -26,8 +26,8 @@ public class SiteFileFetch extends Thread {
             bFirst = false;
             read_nPos();
         } else {
-            nStartPos = new long[bean.getNSplitter()];
-            nEndPos =   new long[bean.getNSplitter()];
+            nStartPos = new long[bean.getNSplitter()]; //起始位置
+            nEndPos =   new long[bean.getNSplitter()];//结束位置
         }
     }
 
@@ -91,12 +91,16 @@ public class SiteFileFetch extends Thread {
                 // if(count>4)
                 // siteStop();
             }
-            System.err.println("文件下载结束！");
+            System.out.println("文件下载结束！");
+            deleteTemFile();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    private void deleteTemFile(){
+        tmpFile.delete();
+    }
     // 获得文件长度
     private long getFileSize() {
         long nFileLength = -1;
@@ -178,9 +182,9 @@ public class SiteFileFetch extends Thread {
         }
     }
 
-    private void processErrorCode(int nErrorCode) {
+   /* private void processErrorCode(int nErrorCode) {
         System.err.println("Error Code : " + nErrorCode);
-    }
+    }*/
 
     // 停止文件下载
     public void siteStop() {

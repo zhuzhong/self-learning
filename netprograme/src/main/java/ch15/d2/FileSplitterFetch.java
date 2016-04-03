@@ -12,15 +12,15 @@ public class FileSplitterFetch extends Thread {
     long nEndPos; // File Snippet End Position
     int nThreadID; // Thread's ID
     boolean bDownOver = false; // Downing is over
-    boolean bStop = false; // Stop identical
-    FileAccessI fileAccessI = null; // File Access interface
+   volatile boolean bStop = false; // Stop identical
+    FileAccess fileAccessI = null; // File Access interface
 
     public FileSplitterFetch(String sURL, String sName, long nStart, long nEnd, int id) throws IOException {
         this.sURL = sURL;
         this.nStartPos = nStart;
         this.nEndPos = nEnd;
         nThreadID = id;
-        fileAccessI = new FileAccessI(sName, nStartPos);
+        fileAccessI = new FileAccess(sName, nStartPos);
     }
 
     public void run() {
@@ -30,6 +30,7 @@ public class FileSplitterFetch extends Thread {
                 HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
                 httpConnection.setRequestProperty("User-Agent", "NetFox");
                 String sProperty = "bytes=" + nStartPos + "-";
+                //String sProperty = "bytes=" + nStartPos + "-"+nEndPos;
                 httpConnection.setRequestProperty("RANGE", sProperty);
                 Utility.log(sProperty);
                 InputStream input = httpConnection.getInputStream();
@@ -52,7 +53,7 @@ public class FileSplitterFetch extends Thread {
     }
 
     // 打印回应的头信息
-    public void logResponseHead(HttpURLConnection con) {
+    /*public void logResponseHead(HttpURLConnection con) {
         for (int i = 1;; i++) {
             String header = con.getHeaderFieldKey(i);
             if (header != null)
@@ -61,7 +62,7 @@ public class FileSplitterFetch extends Thread {
             else
                 break;
         }
-    }
+    }*/
 
     public void splitterStop() {
         bStop = true;
