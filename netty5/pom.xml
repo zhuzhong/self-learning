@@ -48,17 +48,39 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-<dependency>
+<!-- <dependency>
 	<groupId>org.jibx</groupId>
 	<artifactId>jibx-bind</artifactId>
 	<version>1.2.6</version>
 </dependency>
-
+ -->
+  <dependency>
+      <groupId>com.thoughtworks.xstream </groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.4.7</version>
+      <scope>compile</scope>
+    </dependency>
+    
 <dependency>
 	<groupId>com.google.protobuf</groupId>
 	<artifactId>protobuf-java</artifactId>
 	<version>2.6.1</version>
 </dependency>
+
+    
+<!-- <dependency>
+	<groupId>org.json</groupId>
+	<artifactId>json</artifactId>
+	<version>20151123</version>
+</dependency> -->
+
+
+<dependency>
+	<groupId>com.alibaba</groupId>
+	<artifactId>fastjson</artifactId>
+	<version>1.1.15</version>
+</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

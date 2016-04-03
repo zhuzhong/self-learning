@@ -19,5 +19,6 @@
 		<module>thread</module>
 		<module>data-struct</module>
 		<module>suan-fa</module>
+		<module>quartz-learning</module>
 	</modules>
 </project>
