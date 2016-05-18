@@ -11,7 +11,11 @@ public class QueryString {
     encode(name, value);
   }
   
-  public synchronized void add(String name, String value) { 
+  public QueryString() {
+    // TODO Auto-generated constructor stub
+}
+
+public synchronized void add(String name, String value) { 
     query.append('&');
     encode(name, value);
   }
