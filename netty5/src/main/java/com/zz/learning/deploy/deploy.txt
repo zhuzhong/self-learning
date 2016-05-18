@@ -1,0 +1,76 @@
+
+
+功能主要分为以下几个部分：
+1.war文件的上传;
+从自动上传至自动发布服务器指定的目录，
+这个功能主要是运维人员使用，将已打好的war包上传至相应的目录
+2.自动发布
+2.1.将自动发布服务器指定目录的war包远程复制至目标服务器指定的目录
+2.2.目标服务器指定目录文件备份至相应的备份目录；
+2.3.解压war至目标服务器指定的部署目录；
+2.4.重启目标服务器
+
+
+
+3.回滚
+3.1删除目标服务器部署目录文件；
+3.2.将备份文件夹的文件还原；
+3.3重启目标服务器；
+
+相应表结构：
+create table d_war(
+war_id bigint not null auto_increment  ,
+war_name varchar(300) not null comment 'war包名称',
+description  varchar(500) comment 'war包功能描述',
+create_time  datetime,
+primary key(war_id)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='war功能';
+
+CREATE TABLE `d_war_deploy` (
+  `deploy_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `war_id` bigint(20) DEFAULT NULL,
+  `remote_ip` varchar(40) DEFAULT NULL,
+  `remote_user` varchar(50) DEFAULT NULL,
+  `remote_pass` varchar(100) DEFAULT NULL,
+  `remote_server_name` varchar(50) DEFAULT NULL,
+  `remote_server_home` varchar(50) DEFAULT NULL,
+  `remote_upload_path` varchar(400) DEFAULT NULL,
+  `remote_backup_path` varchar(400) DEFAULT NULL,
+  `remote_deploy_path` varchar(400) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`deploy_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应用部署表';
+
+
+
+create table d_war_upload(
+upload_id bigint(20) NOT NULL AUTO_INCREMENT,
+war_id bigint(20) DEFAULT NULL,
+upload_path varchar(400),
+upload_file_name varchar(400),
+upload_time datetime,
+primary key(upload_id)
+ )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='war包上传记录表';
+ 
+ 
+create table d_backup_deploy_log(
+log_id bigint(20) NOT NULL AUTO_INCREMENT,
+deploy_id bigint(20) DEFAULT NULL,
+upload_id bigint(20) DEFAULT NULL,
+remote_upload_real_path varchar(400),
+remote_upload_time date,
+remote_backup_real_path varchar(400),
+remote_backup_time datetime,
+deploy_status varchar(10),
+deploy_start_time datetime,
+deploy_end_time datetime,
+primary key (log_id)
+)engine=innodb default charset=utf8 comment='备份部署日志';
+
+
+
+
+
+
+
+
