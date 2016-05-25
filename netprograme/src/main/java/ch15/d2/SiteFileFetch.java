@@ -57,8 +57,11 @@ public class SiteFileFetch extends Thread {
             // 启动子线程
             fileSplitterFetch = new FileSplitterFetch[nStartPos.length];
             for (int i = 0; i < nStartPos.length; i++) {
-                fileSplitterFetch[i] = new FileSplitterFetch(siteInfoBean.getSSiteURL(), siteInfoBean.getSFilePath()
-                        + File.separator + siteInfoBean.getSFileName(), nStartPos[i], nEndPos[i], i);
+                fileSplitterFetch[i] = new FileSplitterFetch(siteInfoBean.getSSiteURL(), 
+                                                             siteInfoBean.getSFilePath() + File.separator + siteInfoBean.getSFileName(), 
+                                                                nStartPos[i], 
+                                                                nEndPos[i],
+                                                                i);
                 Utility.log("Thread " + i + " , nStartPos = " + nStartPos[i] + ", nEndPos = " + nEndPos[i]);
                 fileSplitterFetch[i].start();
             }
@@ -77,7 +80,7 @@ public class SiteFileFetch extends Thread {
             boolean breakWhile = false;
             while (!bStop) {
                 write_nPos();
-                Utility.sleep(500);
+                Utility.sleepMicroSeconds(500);
                 breakWhile = true;
                 for (int i = 0; i < nStartPos.length; i++) {
                     if (!fileSplitterFetch[i].bDownOver) {

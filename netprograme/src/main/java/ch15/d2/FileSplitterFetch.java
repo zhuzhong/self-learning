@@ -12,7 +12,7 @@ public class FileSplitterFetch extends Thread {
     long nEndPos; // File Snippet End Position
     int nThreadID; // Thread's ID
     boolean bDownOver = false; // Downing is over
-   volatile boolean bStop = false; // Stop identical
+    volatile boolean bStop = false; // Stop identical
     FileAccess fileAccessI = null; // File Access interface
 
     public FileSplitterFetch(String sURL, String sName, long nStart, long nEnd, int id) throws IOException {
@@ -24,13 +24,15 @@ public class FileSplitterFetch extends Thread {
     }
 
     public void run() {
+        String threadName=Thread.currentThread().getName();
         while (nStartPos < nEndPos && !bStop) {
             try {
                 URL url = new URL(sURL);
                 HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
                 httpConnection.setRequestProperty("User-Agent", "NetFox");
-                String sProperty = "bytes=" + nStartPos + "-";
-                //String sProperty = "bytes=" + nStartPos + "-"+nEndPos;
+                // String sProperty = "bytes=" + nStartPos + "-";
+                String sProperty = "bytes=" + nStartPos + "-" + nEndPos;
+                Utility.log(threadName+",range="+sProperty);
                 httpConnection.setRequestProperty("RANGE", sProperty);
                 Utility.log(sProperty);
                 InputStream input = httpConnection.getInputStream();
@@ -39,9 +41,8 @@ public class FileSplitterFetch extends Thread {
                 int nRead;
                 while ((nRead = input.read(b, 0, 1024)) > 0 && nStartPos < nEndPos && !bStop) {
                     nStartPos += fileAccessI.write(b, 0, nRead);
-                    // if(nThreadID == 1)
-                    // Utility.log("nStartPos = " + nStartPos + ", nEndPos = " +
-                    // nEndPos);
+                    if (nThreadID == 1)
+                        Utility.log("nStartPos = " + nStartPos + ", nEndPos = " + nEndPos);
                 }
                 Utility.log("Thread " + nThreadID + " is over!");
                 bDownOver = true;
@@ -53,16 +54,12 @@ public class FileSplitterFetch extends Thread {
     }
 
     // 打印回应的头信息
-    /*public void logResponseHead(HttpURLConnection con) {
-        for (int i = 1;; i++) {
-            String header = con.getHeaderFieldKey(i);
-            if (header != null)
-                // responseHeaders.put(header,httpConnection.getHeaderField(header));
-                Utility.log(header + " : " + con.getHeaderField(header));
-            else
-                break;
-        }
-    }*/
+    /*
+     * public void logResponseHead(HttpURLConnection con) { for (int i = 1;;
+     * i++) { String header = con.getHeaderFieldKey(i); if (header != null) //
+     * responseHeaders.put(header,httpConnection.getHeaderField(header));
+     * Utility.log(header + " : " + con.getHeaderField(header)); else break; } }
+     */
 
     public void splitterStop() {
         bStop = true;
