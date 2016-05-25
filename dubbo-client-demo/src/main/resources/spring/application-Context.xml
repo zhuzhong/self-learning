@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- - Copyright 1999-2011 Alibaba Group. - - Licensed under the Apache License, 
+	Version 2.0 (the "License"); - you may not use this file except in compliance 
+	with the License. - You may obtain a copy of the License at - - http://www.apache.org/licenses/LICENSE-2.0 
+	- - Unless required by applicable law or agreed to in writing, software - 
+	distributed under the License is distributed on an "AS IS" BASIS, - WITHOUT 
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. - See the 
+	License for the specific language governing permissions and - limitations 
+	under the License. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo 
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+
+
+	<!-- 使用disconf必须添加以下配置 -->
+	<bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean"
+		destroy-method="destroy">
+		<property name="scanPackage" value="com.j1" />
+	</bean>
+	<bean id="disconfMgrBean2" class="com.baidu.disconf.client.DisconfMgrBeanSecond"
+		init-method="init" destroy-method="destroy">
+	</bean>
+
+	<!-- <context:property-placeholder location="classpath:config/*.properties"/> -->
+	<!-- 使用托管方式的disconf配置(无代码侵入, 配置更改会自动reload) -->
+	<bean id="configproperties_disconf"
+		class="com.baidu.disconf.client.addons.properties.ReloadablePropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<!-- 这个类好像不认通配符,即*.properties它不认识 ,这也是合理的，因为它需要从配置中心拉取相应的配置，根据key获取，否则不好处理 -->
+				<value>file:d:/tconfig/applicationConfig.properties</value>
+				<value>file:d:/tconfig/index.properties</value>
+				<value>file:d:/tconfig/dubbo.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="propertyConfigurer"
+		class="com.baidu.disconf.client.addons.properties.ReloadingPropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="propertiesArray">
+			<list>
+				<ref bean="configproperties_disconf" />
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="configService" class="com.j1.client.web.ConfigServiceImpl">
+		<property name="index" value="${index}"></property>
+	</bean>
+
+	<dubbo:application name="demo-client" owner="programmer"
+		organization="dubbox" />
+
+	<dubbo:registry address="${zk.address}" />
+
+
+	<dubbo:protocol name="dubbo" port="20880" />
+
+	<dubbo:reference id="helloService"
+		interface="com.j1.server.service.HelloService"></dubbo:reference>
+
+	<bean id="limitFilter" class="com.zz.web.filter.RateLimiterFilter"
+		init-method="init">
+		<property name="useLimit" value="${dubbo.limit.useLimit}" />
+		<property name="permitsPerSecond" value="${dubbo.limit.permitsPerSecond}" />
+	</bean>
+
+
+
+</beans>
