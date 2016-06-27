@@ -20,6 +20,5 @@
 		<module>data-struct</module>
 		<module>suan-fa</module>
 		<module>quartz-learning</module>
-		<module>jak7-src</module>
 	</modules>
 </project>
