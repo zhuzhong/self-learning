@@ -5,10 +5,14 @@ package com.zz.learning.mongodb;
 
 import java.net.UnknownHostException;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.mongodb.AggregationOutput;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -35,6 +39,29 @@ public class FindTest {
 
 	}
 
+	
+	@Test
+	public void aggregate(){
+		List<DBObject> ps=new ArrayList<DBObject>();
+		ps.add(new BasicDBObject().append("$project", new BasicDBObject().append("author", 1)));
+		ps.add(new BasicDBObject().append("$group", new BasicDBObject().append("_id", "$author").append("count", new BasicDBObject().append("$sum", 1))));
+		ps.add(new BasicDBObject().append("$sort", new BasicDBObject().append("count", -1)));
+		ps.add(new BasicDBObject().append("$limit", 5));
+		coll = db.getCollection("articles");
+		AggregationOutput ao=coll.aggregate(ps);
+		for(DBObject o:ao.results()){
+			System.out.println(o);
+		}
+		
+	}
+	@Test
+	public void collectionNames() {
+		Set<String> ss = db.getCollectionNames();
+		for (String s : ss) {
+			System.out.println(s);
+		}
+	}
+
 	@Test
 	public void elemMatch() {
 		/*
@@ -58,12 +85,12 @@ public class FindTest {
 
 	@Test
 	public void pageFind() {
-		//分页查询
-		int pageNo=10;
-		int pageSize=25;
+		// 分页查询
+		int pageNo = 10;
+		int pageSize = 25;
 		DBObject re = coll.find(new BasicDBObject())
-				.sort(new BasicDBObject().append("x", 1)).limit(pageSize).skip(pageNo*pageSize)
-				.explain();
+				.sort(new BasicDBObject().append("x", 1)).limit(pageSize)
+				.skip(pageNo * pageSize).explain();
 		System.out.println(re);
 	}
 
