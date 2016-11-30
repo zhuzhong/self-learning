@@ -15,7 +15,7 @@ import com.j1.server.service.HelloService;
 public class HelloServiceImpl implements HelloService {
 
 	public String sayHello(String name) {
-
+	       
 		return "hello " + name;
 	}
 
