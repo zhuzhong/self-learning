@@ -27,10 +27,10 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
  *
  */
 public class MatrixToImageWriter {
-	private static final int IMAGE_WIDTH = 100;
-	private static final int IMAGE_HEIGHT = 100;
-	private static final int IMAGE_HALF_WIDTH = IMAGE_WIDTH / 2;
-	private static final int FRAME_WIDTH = 2;
+	private static  int IMAGE_WIDTH = 100;
+	private static  int IMAGE_HEIGHT = 100;
+	private static  int IMAGE_HALF_WIDTH = IMAGE_WIDTH / 2;
+	private static  int FRAME_WIDTH = 2;
 	private static MultiFormatWriter mutiWriter = new MultiFormatWriter();
 
 	public static void encode(String content, int width, int height,
@@ -48,13 +48,19 @@ public class MatrixToImageWriter {
 	private static BufferedImage genBarcode(String content, int width,
 			int height, String srcImagePath) throws WriterException,
 			IOException {
-		BufferedImage scaleImage = scale(srcImagePath, IMAGE_WIDTH,
-				IMAGE_HEIGHT, true);
 		int[][] srcPixels = new int[IMAGE_WIDTH][IMAGE_HEIGHT];
-		for (int i = 0; i < scaleImage.getWidth(); i++) {
-			for (int j = 0; j < scaleImage.getHeight(); j++) {
-				srcPixels[i][j] = scaleImage.getRGB(i, j);
+		if(srcImagePath!=null){
+    		BufferedImage scaleImage = scale(srcImagePath, IMAGE_WIDTH,
+    				IMAGE_HEIGHT, true);
+			for (int i = 0; i < scaleImage.getWidth(); i++) {
+				for (int j = 0; j < scaleImage.getHeight(); j++) {
+					srcPixels[i][j] = scaleImage.getRGB(i, j);
+				}
 			}
+		}else{
+		       IMAGE_WIDTH = 0;
+		      IMAGE_HEIGHT = 0;
+		      IMAGE_HALF_WIDTH=0;
 		}
 		Map<EncodeHintType, Object> hint = new HashMap<EncodeHintType, Object>();
 		hint.put(EncodeHintType.CHARACTER_SET, "utf-8");
@@ -80,8 +86,10 @@ public class MatrixToImageWriter {
 						&& x < halfW + IMAGE_HALF_WIDTH
 						&& y > halfH - IMAGE_HALF_WIDTH
 						&& y < halfH + IMAGE_HALF_WIDTH) {
-					pixels[y * width + x] = srcPixels[x - halfW
-							+ IMAGE_HALF_WIDTH][y - halfH + IMAGE_HALF_WIDTH];
+				    if(srcImagePath!=null){
+    					pixels[y * width + x] = srcPixels[x - halfW
+    							+ IMAGE_HALF_WIDTH][y - halfH + IMAGE_HALF_WIDTH];
+				    }
 				} else if ((x > halfW - IMAGE_HALF_WIDTH - FRAME_WIDTH
 						&& x < halfW - IMAGE_HALF_WIDTH + FRAME_WIDTH
 						&& y > halfH - IMAGE_HALF_WIDTH - FRAME_WIDTH && y < halfH

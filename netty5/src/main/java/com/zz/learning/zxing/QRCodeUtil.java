@@ -33,7 +33,7 @@ public class QRCodeUtil {
     private static final String CHARSET = "utf-8";  
     private static final String FORMAT_NAME = "JPG";  
     // 二维码尺寸  
-    private static final int QRCODE_SIZE = 300;  
+    private static final int QRCODE_SIZE = 1000;  
     // LOGO宽度  
     private static final int WIDTH = 60;  
     // LOGO高度  
@@ -130,9 +130,10 @@ public class QRCodeUtil {
             boolean needCompress) throws Exception {  
         BufferedImage image = QRCodeUtil.createImage(content, imgPath,  
                 needCompress);  
-        mkdirs(destPath);  
-        String file = new Random().nextInt(99999999)+".jpg";  
-        ImageIO.write(image, FORMAT_NAME, new File(destPath+"/"+file));  
+        //mkdirs(destPath);  
+        //String file = new Random().nextInt(99999999)+".jpg";  
+       // ImageIO.write(image, FORMAT_NAME, new File(destPath+"/"+file));  
+        ImageIO.write(image, FORMAT_NAME, new File(destPath)); 
     }  
   
     /** 
@@ -269,7 +270,7 @@ public class QRCodeUtil {
     public static void main(String[] args) throws Exception {  
         String text = "http://m.j1.com/product/79103-87925.html?t=test";  
        // QRCodeUtil.encode(text, "c:/df.jsp", "c:/a/", true);  
-        QRCodeUtil.encode(text, "d:/zk/logo.png", "d:/zk/test", true);  
+        QRCodeUtil.encode(text, "d:/zk/logo.png", "d:/zk/test/a.png", true);  
         System.out.println("oook");
     }  
 }  
