@@ -5,6 +5,7 @@ package com.zz.learning.page;
 
 /**
  * 分页使用，条件 rownum>startIndex and rownum<=endIndex
+ * 
  * @author sunff
  *
  */
@@ -12,17 +13,44 @@ public class Pagination {
 
 	public static final int DEFAULT_PAGE_SIZE = 20;
 	private final int pageSize; // 单页数据行数
+	private int totalCount; // 总数据行数
+	private int pageNum;// 页数
 
 	public Pagination() {
 		this.pageSize = DEFAULT_PAGE_SIZE;
+		setPageNum(0);
+		setTotalCount(0);
 	}
 
 	public Pagination(int pageSize) {
 		this.pageSize = pageSize;
+		setPageNum(0);
+		setTotalCount(0);
 	}
 
-	private int totalCount; // 总数据行数
-	private int pageNum;// 页数
+	public void perviousPage() {
+		if (hasPreviousPage())
+			setPageNum(pageNum - 1);
+	}
+
+	public void nextPage() {
+		if (hasNextPage())
+			setPageNum(pageNum + 1);
+	}
+
+	public boolean hasNextPage() {
+		if (totalCount > 0 && getPageCount() >=pageNum) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean hasPreviousPage() {
+		if (pageNum > 0) {
+			return true;
+		}
+		return false;
+	}
 
 	public int getTotalCount() {
 		return totalCount;
