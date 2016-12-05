@@ -1,7 +1,11 @@
 package com.zz.learning.page;
 
 import java.io.Serializable;
-
+/**
+ * rownum>startIndex and rownum<=endIndex形式
+ * @author sunff
+ *
+ */
 public class PageParam implements Serializable {
 
 	private static final long serialVersionUID = -6729261950093637302L;
