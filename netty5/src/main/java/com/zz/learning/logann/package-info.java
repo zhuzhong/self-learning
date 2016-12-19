@@ -11,5 +11,5 @@ package com.zz.learning.logann;
 1.打开   <aop:aspectj-autoproxy />
 
 2.注入bean MethodLogAspect
-
+3.在需要打印log的方法使用注解MethodLog
 */
