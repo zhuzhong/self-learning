@@ -7,13 +7,13 @@
       FROM ( 
             SELECT t1.*, ROWNUM rownum_ 
             FROM ( 
-                select user_id,user_name from user t where t.regist_time>#time# and 
-                ) t1 
+                select user_id,user_name from user t where t.regist_time>#time#  
+                ) t1 where ROWNUM <= #endIndex#
             ) t2 
-     WHERE rownum_ > #startIndex# AND rownum_ <= #endIndex#
+     WHERE rownum_ > #startIndex# 
  
      对于mysql数据库，物理分页sql语句
-  select user_id,user_name from user t where t.regist_time>#time# limit #startIndex#,#endIndex#
+  select user_id,user_name from user t where t.regist_time>#time# limit #startIndex#,#pageSize#
   
   
  * @author sunff
