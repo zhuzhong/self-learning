@@ -65,8 +65,8 @@ public class MethodLogAspect {
             Object arg = args[k];  
             sb.append(paramNames[k]+" ");  
             // 获取对象类型  
-            String typeName = arg.getClass().getTypeName();  
-              
+           // String typeName = arg.getClass().getTypeName();  
+            String typeName = arg.getClass().getName(); 
             for (String t : types) {  
                 if (t.equals(typeName)) {  
                     sb.append("=" + arg+"; ");  
@@ -140,7 +140,8 @@ public class MethodLogAspect {
      */  
     private  String getFieldsValue(Object obj) {  
         Field[] fields = obj.getClass().getDeclaredFields();  
-        String typeName = obj.getClass().getTypeName();  
+       // String typeName = obj.getClass().getTypeName();  
+        String typeName = obj.getClass().getName();
         for (String t : types) {  
             if(t.equals(typeName))  
                 return "";  

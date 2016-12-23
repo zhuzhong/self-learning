@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.stereotype.Service;
 
+import c.z.zcommon.channel.Filter;
+import c.z.zcommon.channel.FixedFilterChain;
+
 /**
  * @author Administrator
  *

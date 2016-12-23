@@ -6,6 +6,10 @@ package com.zz.learning.page;
 import java.util.List;
 import java.util.Map;
 
+import c.z.zcommon.page.PageParam;
+import c.z.zcommon.page.PageResult;
+import c.z.zcommon.page.PageService;
+
 /**
  * @author Administrator
  *

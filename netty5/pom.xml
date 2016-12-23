@@ -16,6 +16,13 @@
 	</properties>
 
 	<dependencies>
+	
+	<dependency>
+	<groupId>c.z</groupId>
+	<artifactId>z-common</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+</dependency>
+
   <!-- 
 <dependency>
 	<groupId>net.sourceforge.jexcelapi</groupId>
