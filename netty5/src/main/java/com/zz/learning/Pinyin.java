@@ -3,7 +3,7 @@
  */
 package com.zz.learning;
 
-import java.util.HashSet;
+/*import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
@@ -13,31 +13,31 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
-/**
+*//**
  * @author Administrator
  *
- */
+ *//*
 public class Pinyin {
 
-    /**
+    *//**
      * 递归
      * 
      * @author wyh
      * @param strJaggedArray
      * @return
-     */
+     *//*
     public static String[] Exchange(String[][] strJaggedArray) {
         String[][] temp = doExchange(strJaggedArray);
         return temp[0];
     }
 
-    /**
+    *//**
      * 递归
      * 
      * @author wyh
      * @param strJaggedArray
      * @return
-     */
+     *//*
     private static String[][] doExchange(String[][] strJaggedArray) {
         int len = strJaggedArray.length;
         if (len >= 2) {
@@ -63,13 +63,13 @@ public class Pinyin {
         }
     }
 
-    /**
+    *//**
      * 字符串集合转换字符串(逗号分隔)
      * 
      * @author wyh
      * @param stringSet
      * @return
-     */
+     *//*
     public static String makeStringByStringSet(Set<String> stringSet) {
         StringBuilder str = new StringBuilder();
         int i = 0;
@@ -84,9 +84,9 @@ public class Pinyin {
         return str.toString().toUpperCase();
     }
 
-    /**
+    *//**
      * @param args
-     */
+     *//*
     public static void main(String[] args) {
         String str = "修正药业";
         System.out.println(makeStringByStringSet(getPinyin(str)));
@@ -134,3 +134,4 @@ public class Pinyin {
     }
 
 }
+*/

@@ -1,6 +1,6 @@
 package com.zz.learning.zxing;
 
-import java.awt.Color;
+/*import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
@@ -21,11 +21,11 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
-/**
+*//**
  * 生成彩色二维码
  * @author sunff
  *
- */
+ *//*
 public class MatrixToImageWriter {
 	private static  int IMAGE_WIDTH = 100;
 	private static  int IMAGE_HEIGHT = 100;
@@ -181,4 +181,4 @@ public class MatrixToImageWriter {
 				"d:/zk/logo.png","d:/zk/test2/感冒灵.png");
 
 	}
-}
+}*/

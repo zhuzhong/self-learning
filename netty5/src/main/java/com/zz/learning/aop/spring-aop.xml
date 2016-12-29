@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	 xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+http://www.springframework.org/schema/beans/spring-beans.xsd  
+http://www.springframework.org/schema/cache  
+http://www.springframework.org/schema/cache/spring-cache.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+ http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+<aop:aspectj-autoproxy/>
+	<bean id="adviceBean" class="com.zz.learning.aop.PlayAdvice" />
+
+
+	<bean id="pointcutBean" class="com.zz.learning.aop.PlayPointcut" />
+
+
+	<bean id="playService" class="com.zz.learning.aop.Play" />
+
+
+
+
+	<bean class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="adviceBean"></property>
+		<property name="pointcut" ref="pointcutBean"></property>
+	</bean>
+
+</beans>

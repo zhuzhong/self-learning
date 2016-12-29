@@ -3,7 +3,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;  
 import java.awt.image.BufferedImage;  
   
-import com.google.zxing.LuminanceSource;  
+/*import com.google.zxing.LuminanceSource;  
   
 public class BufferedImageLuminanceSource extends LuminanceSource {  
     private final BufferedImage image;  
@@ -95,4 +95,4 @@ public class BufferedImageLuminanceSource extends LuminanceSource {
         return new BufferedImageLuminanceSource(rotatedImage, top,  
                 sourceWidth - (left + width), getHeight(), width);  
     }  
-}  
+}  */

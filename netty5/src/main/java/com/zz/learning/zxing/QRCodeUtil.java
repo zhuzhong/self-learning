@@ -1,5 +1,5 @@
 package com.zz.learning.zxing;
-import java.awt.BasicStroke;  
+/*import java.awt.BasicStroke;  
 import java.awt.Graphics;  
 import java.awt.Graphics2D;  
 import java.awt.Image;  
@@ -24,10 +24,10 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;  
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;  
   
-/** 
+*//** 
  * 二维码工具类 
  *  
- */  
+ *//*  
 public class QRCodeUtil {  
   
     private static final String CHARSET = "utf-8";  
@@ -65,7 +65,7 @@ public class QRCodeUtil {
         return image;  
     }  
   
-    /** 
+    *//** 
      * 插入LOGO 
      *  
      * @param source 
@@ -75,7 +75,7 @@ public class QRCodeUtil {
      * @param needCompress 
      *            是否压缩 
      * @throws Exception 
-     */  
+     *//*  
     private static void insertImage(BufferedImage source, String imgPath,  
             boolean needCompress) throws Exception {  
         File file = new File(imgPath);  
@@ -113,7 +113,7 @@ public class QRCodeUtil {
         graph.dispose();  
     }  
   
-    /** 
+    *//** 
      * 生成二维码(内嵌LOGO) 
      *  
      * @param content 
@@ -125,7 +125,7 @@ public class QRCodeUtil {
      * @param needCompress 
      *            是否压缩LOGO 
      * @throws Exception 
-     */  
+     *//*  
     public static void encode(String content, String imgPath, String destPath,  
             boolean needCompress) throws Exception {  
         BufferedImage image = QRCodeUtil.createImage(content, imgPath,  
@@ -136,13 +136,13 @@ public class QRCodeUtil {
         ImageIO.write(image, FORMAT_NAME, new File(destPath)); 
     }  
   
-    /** 
+    *//** 
      * 当文件夹不存在时，mkdirs会自动创建多层目录，区别于mkdir．(mkdir如果父目录不存在则会抛出异常) 
      * @author lanyuan 
      * Email: mmm333zzz520@163.com 
      * @date 2013-12-11 上午10:16:36 
      * @param destPath 存放目录 
-     */  
+     *//*  
     public static void mkdirs(String destPath) {  
         File file =new File(destPath);      
         //当文件夹不存在时，mkdirs会自动创建多层目录，区别于mkdir．(mkdir如果父目录不存在则会抛出异常)  
@@ -151,7 +151,7 @@ public class QRCodeUtil {
         }  
     }  
   
-    /** 
+    *//** 
      * 生成二维码(内嵌LOGO) 
      *  
      * @param content 
@@ -161,13 +161,13 @@ public class QRCodeUtil {
      * @param destPath 
      *            存储地址 
      * @throws Exception 
-     */  
+     *//*  
     public static void encode(String content, String imgPath, String destPath)  
             throws Exception {  
         QRCodeUtil.encode(content, imgPath, destPath, false);  
     }  
   
-    /** 
+    *//** 
      * 生成二维码 
      *  
      * @param content 
@@ -177,13 +177,13 @@ public class QRCodeUtil {
      * @param needCompress 
      *            是否压缩LOGO 
      * @throws Exception 
-     */  
+     *//*  
     public static void encode(String content, String destPath,  
             boolean needCompress) throws Exception {  
         QRCodeUtil.encode(content, null, destPath, needCompress);  
     }  
   
-    /** 
+    *//** 
      * 生成二维码 
      *  
      * @param content 
@@ -191,12 +191,12 @@ public class QRCodeUtil {
      * @param destPath 
      *            存储地址 
      * @throws Exception 
-     */  
+     *//*  
     public static void encode(String content, String destPath) throws Exception {  
         QRCodeUtil.encode(content, null, destPath, false);  
     }  
   
-    /** 
+    *//** 
      * 生成二维码(内嵌LOGO) 
      *  
      * @param content 
@@ -208,7 +208,7 @@ public class QRCodeUtil {
      * @param needCompress 
      *            是否压缩LOGO 
      * @throws Exception 
-     */  
+     *//*  
     public static void encode(String content, String imgPath,  
             OutputStream output, boolean needCompress) throws Exception {  
         BufferedImage image = QRCodeUtil.createImage(content, imgPath,  
@@ -216,7 +216,7 @@ public class QRCodeUtil {
         ImageIO.write(image, FORMAT_NAME, output);  
     }  
   
-    /** 
+    *//** 
      * 生成二维码 
      *  
      * @param content 
@@ -224,20 +224,20 @@ public class QRCodeUtil {
      * @param output 
      *            输出流 
      * @throws Exception 
-     */  
+     *//*  
     public static void encode(String content, OutputStream output)  
             throws Exception {  
         QRCodeUtil.encode(content, null, output, false);  
     }  
   
-    /** 
+    *//** 
      * 解析二维码 
      *  
      * @param file 
      *            二维码图片 
      * @return 
      * @throws Exception 
-     */  
+     *//*  
     public static String decode(File file) throws Exception {  
         BufferedImage image;  
         image = ImageIO.read(file);  
@@ -255,14 +255,14 @@ public class QRCodeUtil {
         return resultStr;  
     }  
   
-    /** 
+    *//** 
      * 解析二维码 
      *  
      * @param path 
      *            二维码图片地址 
      * @return 
      * @throws Exception 
-     */  
+     *//*  
     public static String decode(String path) throws Exception {  
         return QRCodeUtil.decode(new File(path));  
     }  
@@ -275,3 +275,4 @@ public class QRCodeUtil {
     }  
 }  
 
+*/
