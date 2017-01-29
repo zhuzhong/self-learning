@@ -15,7 +15,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 <!-- <aop:aspectj-autoproxy /> -->
 <!-- spring cache 的实质 -->
 <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"></bean>
-<bean id="operationSource" class="org.springframework.cache.annotation.AnnotationCacheOperationSource" />
+<bean id="operationSource" class="org.springframework.cache.annotation.AnnotationCacheOperationSource" >
+</bean>
 
 <bean id="cacheInterceptor" class="org.springframework.cache.interceptor.CacheInterceptor">
 <!-- 	<property name="cacheOperationSources" ref="operationSource" /> -->
