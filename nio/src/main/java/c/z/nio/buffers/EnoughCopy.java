@@ -9,7 +9,7 @@ import java.nio.CharBuffer;
  * @author sunff
  *
  */
-public class EncoughCopy {
+public class EnoughCopy {
 
     /**
      * @param args
