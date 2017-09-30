@@ -2,13 +2,13 @@ package com.behaviour.command;
 public class Client {
 
     public static void main(String[] args) {
-        //´´½¨½ÓÊÕÕß
+        //åˆ›å»ºæ¥æ”¶è€…
         Receiver receiver = new Receiver();
-        //´´½¨ÃüÁî¶ÔÏó£¬Éè¶¨ËüµÄ½ÓÊÕÕß
+        //åˆ›å»ºå‘½ä»¤å¯¹è±¡ï¼Œè®¾å®šå®ƒçš„æ¥æ”¶è€…
         Command command = new ConcreteCommand(receiver);
-        //´´½¨ÇëÇóÕß£¬°ÑÃüÁî¶ÔÏóÉèÖÃ½øÈ¥
+        //åˆ›å»ºè¯·æ±‚è€…ï¼ŒæŠŠå‘½ä»¤å¯¹è±¡è®¾ç½®è¿›å»
         Invoker invoker = new Invoker(command);
-        //Ö´ĞĞ·½·¨
+        //æ‰§è¡Œæ–¹æ³•
         invoker.action();
     }
 

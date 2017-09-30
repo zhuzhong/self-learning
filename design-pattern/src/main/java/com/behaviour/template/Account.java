@@ -1,35 +1,35 @@
 package com.behaviour.template;
 
 public abstract class Account {
-	/**
-	 * Ä£°å·½·¨£¬¼ÆËãÀûÏ¢Êı¶î
-	 * 
-	 * @return ·µ»ØÀûÏ¢Êı¶î
-	 */
-	public final double calculateInterest() {
-		double interestRate = doCalculateInterestRate();
-		String accountType = doCalculateAccountType();
-		double amount = calculateAmount(accountType);
-		return amount * interestRate;
-	}
+    /**
+     * æ¨¡æ¿æ–¹æ³•ï¼Œè®¡ç®—åˆ©æ¯æ•°é¢
+     * 
+     * @return è¿”å›åˆ©æ¯æ•°é¢
+     */
+    public final double calculateInterest() {
+        double interestRate = doCalculateInterestRate();
+        String accountType = doCalculateAccountType();
+        double amount = calculateAmount(accountType);
+        return amount * interestRate;
+    }
 
-	/**
-	 * ÕËºÅÀàĞÍ »ù±¾·½·¨Áô¸ø×ÓÀàÊµÏÖ
-	 */
-	protected abstract String doCalculateAccountType();
+    /**
+     * è´¦å·ç±»å‹ åŸºæœ¬æ–¹æ³•ç•™ç»™å­ç±»å®ç°
+     */
+    protected abstract String doCalculateAccountType();
 
-	/**
-	 * »ù±¾·½·¨Áô¸ø×ÓÀàÊµÏÖ,¼ÆËãÀûÂÊ
-	 */
-	protected abstract double doCalculateInterestRate();
+    /**
+     * åŸºæœ¬æ–¹æ³•ç•™ç»™å­ç±»å®ç°,è®¡ç®—åˆ©ç‡
+     */
+    protected abstract double doCalculateInterestRate();
 
-	/**
-	 * »ù±¾·½·¨£¬ÒÑ¾­ÊµÏÖ
-	 */
-	private double calculateAmount(String accountType) {
-		/**
-		 * Ê¡ÂÔÏà¹ØµÄÒµÎñÂß¼­
-		 */
-		return 7243.00;
-	}
+    /**
+     * åŸºæœ¬æ–¹æ³•ï¼Œå·²ç»å®ç°
+     */
+    private double calculateAmount(String accountType) {
+        /**
+         * çœç•¥ç›¸å…³çš„ä¸šåŠ¡é€»è¾‘
+         */
+        return 7243.00;
+    }
 }

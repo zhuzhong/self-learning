@@ -1,7 +1,10 @@
 package com.proxy.asm;
- import java.io.File; 
- import java.io.FileOutputStream; 
- import org.objectweb.asm.*; 
+ import java.io.File;
+import java.io.FileOutputStream;
+
+import org.objectweb.asm.ClassAdapter;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassWriter; 
     
  public class Generator{ 
 	 public static void main(String args[]) throws Exception { 

@@ -2,12 +2,13 @@ package com.behaviour.chain;
 public class Client {
 
     public static void main(String[] args) {
-        //×é×°ÔğÈÎÁ´
+        //ç»„è£…è´£ä»»é“¾
         Handler handler1 = new ConcreteHandler();
         Handler handler2 = new ConcreteHandler();
         handler1.setSuccessor(handler2);
-        //Ìá½»ÇëÇó
+        //æäº¤è¯·æ±‚
         handler1.handleRequest();
     }
+
 
 }

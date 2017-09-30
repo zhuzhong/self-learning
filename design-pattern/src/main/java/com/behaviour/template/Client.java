@@ -1,15 +1,16 @@
 package com.behaviour.template;
 
 /*
- * servlet¾ÍÊÇÄ£°åÄ£Ê½µÄÓ¦ÓÃ£¬ËüÖ»ÓĞÒ»¸öservice()Ä£°å·½·¨
+ * 
  */
 public class Client {
 
     public static void main(String[] args) {
         Account account = new MoneyMarketAccount();
-        System.out.println("»õ±ÒÊĞ³¡ÕËºÅµÄÀûÏ¢Êı¶îÎª£º" + account.calculateInterest());
+        System.out.println("è´§å¸å¸‚åœºè´¦å·çš„åˆ©æ¯æ•°é¢ä¸ºï¼š" + account.calculateInterest());
         account = new CDAccount();
-        System.out.println("¶¨ÆÚÕËºÅµÄÀûÏ¢Êı¶îÎª£º" + account.calculateInterest());
+        System.out.println("å®šæœŸè´¦å·çš„åˆ©æ¯æ•°é¢ä¸ºï¼š" + account.calculateInterest());
     }
+
 
 }

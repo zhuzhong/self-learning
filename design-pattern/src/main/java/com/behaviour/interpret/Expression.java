@@ -1,19 +1,19 @@
 package com.behaviour.interpret;
 public abstract class Expression {
     /**
-     * 以环境为准，本方法解释给定的任何一个表达式
+     * 浠ョ幆澧冧负鍑嗭紝鏈柟娉曡В閲婄粰瀹氱殑浠讳綍涓�涓〃杈惧紡
      */
     public abstract boolean interpret(Context ctx);
     /**
-     * 检验两个表达式在结构上是否相同
+     * 妫�楠屼袱涓〃杈惧紡鍦ㄧ粨鏋勪笂鏄惁鐩稿悓
      */
     public abstract boolean equals(Object obj);
     /**
-     * 返回表达式的hash code
+     * 杩斿洖琛ㄨ揪寮忕殑hash code
      */
     public abstract int hashCode();
     /**
-     * 将表达式转换成字符串
+     * 灏嗚〃杈惧紡杞崲鎴愬瓧绗︿覆
      */
     public abstract String toString();
 }

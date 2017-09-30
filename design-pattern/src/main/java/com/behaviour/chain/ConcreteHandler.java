@@ -1,22 +1,22 @@
 package com.behaviour.chain;
 public class ConcreteHandler extends Handler {
     /**
-     * ´¦Àí·½·¨£¬µ÷ÓÃ´Ë·½·¨´¦ÀíÇëÇó
+     * å¤„ç†æ–¹æ³•ï¼Œè°ƒç”¨æ­¤æ–¹æ³•å¤„ç†è¯·æ±‚
      */
     @Override
     public void handleRequest() {
         /**
-         * ÅĞ¶ÏÊÇ·ñÓĞºó¼ÌµÄÔğÈÎ¶ÔÏó
-         * Èç¹ûÓĞ£¬¾Í×ª·¢ÇëÇó¸øºó¼ÌµÄÔğÈÎ¶ÔÏó
-         * Èç¹ûÃ»ÓĞ£¬Ôò´¦ÀíÇëÇó
+         * åˆ¤æ–­æ˜¯å¦æœ‰åç»§çš„è´£ä»»å¯¹è±¡
+         * å¦‚æœæœ‰ï¼Œå°±è½¬å‘è¯·æ±‚ç»™åç»§çš„è´£ä»»å¯¹è±¡
+         * å¦‚æœæ²¡æœ‰ï¼Œåˆ™å¤„ç†è¯·æ±‚
          */
         if(getSuccessor() != null)
         {            
-            System.out.println("·Å¹ıÇëÇó");
+            System.out.println("æ”¾è¿‡è¯·æ±‚");
             getSuccessor().handleRequest();            
         }else
         {            
-            System.out.println("´¦ÀíÇëÇó");
+            System.out.println("å¤„ç†è¯·æ±‚");
         }
     }
 

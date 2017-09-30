@@ -1,37 +1,39 @@
 package com.proxy.asm;
 
-import org.objectweb.asm.*;
+import org.objectweb.asm.ClassAdapter;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.MethodVisitor;
 
 public class AddSecurityCheckClassAdapter extends ClassAdapter {
 
 	private String enhancedSuperName;
 
 	public AddSecurityCheckClassAdapter(ClassVisitor cv) {
-		// Responsechain µÄÏÂÒ»¸ö ClassVisitor£¬ÕâÀïÎÒÃÇ½«´«Èë ClassWriter£¬
-		// ¸ºÔð¸ÄÐ´ºó´úÂëµÄÊä³ö
+		// Responsechain ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ ClassVisitorï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ ClassWriterï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		super(cv);
 	}
 
 	public void visit(final int version, final int access, final String name,
 			final String signature, final String superName,
 			final String[] interfaces) {
-		String enhancedName = name + "$EnhancedByASM"; // ¸Ä±äÀàÃüÃû
-		enhancedSuperName = name; // ¸Ä±ä¸¸Àà£¬ÕâÀïÊÇ¡±Account¡±
+		String enhancedName = name + "$EnhancedByASM"; // ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		enhancedSuperName = name; // ï¿½Ä±ä¸¸ï¿½à£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ç¡ï¿½Accountï¿½ï¿½
 		super.visit(version, access, enhancedName, signature,
 				enhancedSuperName, interfaces);
 	}
 
-	// ÖØÐ´ visitMethod£¬·ÃÎÊµ½ "operation" ·½·¨Ê±£¬
-	// ¸ø³ö×Ô¶¨Òå MethodVisitor£¬Êµ¼Ê¸ÄÐ´·½·¨ÄÚÈÝ
+	// ï¿½ï¿½Ð´ visitMethodï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ "operation" ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ MethodVisitorï¿½ï¿½Êµï¿½Ê¸ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public MethodVisitor visitMethod2(final int access, final String name,
 			final String desc, final String signature, final String[] exceptions) {
 		MethodVisitor mv = cv.visitMethod(access, name, desc, signature,
 				exceptions);
 		MethodVisitor wrappedMv = mv;
 		if (mv != null) {
-			// ¶ÔÓÚ "operation" ·½·¨
+			// ï¿½ï¿½ï¿½ï¿½ "operation" ï¿½ï¿½ï¿½ï¿½
 			if (name.equals("operation")) {
-				// Ê¹ÓÃ×Ô¶¨Òå MethodVisitor£¬Êµ¼Ê¸ÄÐ´·½·¨ÄÚÈÝ
+				// Ê¹ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ MethodVisitorï¿½ï¿½Êµï¿½Ê¸ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				wrappedMv = new AddSecurityCheckMethodAdapter(mv);
 			}
 		}

@@ -2,22 +2,22 @@ package com.behaviour.chain;
 public abstract class Handler {
     
     /**
-     * ³ÖÓĞºó¼ÌµÄÔğÈÎ¶ÔÏó
+     * æŒæœ‰åç»§çš„è´£ä»»å¯¹è±¡
      */
     protected Handler successor;
     /**
-     * Ê¾Òâ´¦ÀíÇëÇóµÄ·½·¨£¬ËäÈ»Õâ¸öÊ¾Òâ·½·¨ÊÇÃ»ÓĞ´«Èë²ÎÊıµÄ
-     * µ«Êµ¼ÊÊÇ¿ÉÒÔ´«Èë²ÎÊıµÄ£¬¸ù¾İ¾ßÌåĞèÒªÀ´Ñ¡ÔñÊÇ·ñ´«µİ²ÎÊı
+     * ç¤ºæ„å¤„ç†è¯·æ±‚çš„æ–¹æ³•ï¼Œè™½ç„¶è¿™ä¸ªç¤ºæ„æ–¹æ³•æ˜¯æ²¡æœ‰ä¼ å…¥å‚æ•°çš„
+     * ä½†å®é™…æ˜¯å¯ä»¥ä¼ å…¥å‚æ•°çš„ï¼Œæ ¹æ®å…·ä½“éœ€è¦æ¥é€‰æ‹©æ˜¯å¦ä¼ é€’å‚æ•°
      */
     public abstract void handleRequest();
     /**
-     * È¡Öµ·½·¨
+     * å–å€¼æ–¹æ³•
      */
     public Handler getSuccessor() {
         return successor;
     }
     /**
-     * ¸³Öµ·½·¨£¬ÉèÖÃºó¼ÌµÄÔğÈÎ¶ÔÏó
+     * èµ‹å€¼æ–¹æ³•ï¼Œè®¾ç½®åç»§çš„è´£ä»»å¯¹è±¡
      */
     public void setSuccessor(Handler successor) {
         this.successor = successor;

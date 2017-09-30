@@ -2,14 +2,14 @@ package com.behaviour.command.demo;
 public class AudioPlayer {
     
     public void play(){
-        System.out.println("²¥·Å...");
+        System.out.println("æ’­æ”¾...");
     }
     
     public void rewind(){
-        System.out.println("µ¹´ø...");
+        System.out.println("å€’å¸¦...");
     }
     
     public void stop(){
-        System.out.println("Í£Ö¹...");
+        System.out.println("åœæ­¢...");
     }
 }

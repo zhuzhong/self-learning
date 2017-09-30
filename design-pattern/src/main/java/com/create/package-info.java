@@ -1,7 +1,7 @@
 
 /**
- * 创建型模式，包括工厂方法 factory method,抽象工厂abstract factory,单例 singleton,
- * 构建builder,原型prototype
+ * 鍒涘缓鍨嬫ā寮忥紝鍖呮嫭宸ュ巶鏂规硶 factory method,鎶借薄宸ュ巶abstract factory,鍗曚緥 singleton,
+ * 鏋勫缓builder,鍘熷瀷prototype
  * @author snoopy
  *
  */

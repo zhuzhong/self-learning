@@ -1,18 +1,18 @@
 package com.behaviour.visitor;
 
 /*
- * node½ÓÊÜvisitorµÄ·ÃÎÊÍê³ÉÒ»´ÎÔËÌ¬·ÖÅÉ£¬²¢½«×Ô¼º´«¸øvistor£¬¶øvistorÓÖÍê³ÉÒ»´ÎÔËÌ¬·Ö·ÖÅÉ
+ * nodeæ¥å—visitorçš„è®¿é—®å®Œæˆä¸€æ¬¡è¿æ€åˆ†æ´¾ï¼Œå¹¶å°†è‡ªå·±ä¼ ç»™vistorï¼Œè€Œvistoråˆå®Œæˆä¸€æ¬¡è¿æ€åˆ†åˆ†æ´¾
  */
 public class Client {
 
     public static void main(String[] args) {
-        //´´½¨Ò»¸ö½á¹¹¶ÔÏó
+        //åˆ›å»ºä¸€ä¸ªç»“æ„å¯¹è±¡
         ObjectStructure os = new ObjectStructure();
-        //¸ø½á¹¹Ôö¼ÓÒ»¸ö½Úµã
+        //ç»™ç»“æ„å¢åŠ ä¸€ä¸ªèŠ‚ç‚¹
         os.add(new NodeA());
-        //¸ø½á¹¹Ôö¼ÓÒ»¸ö½Úµã
+        //ç»™ç»“æ„å¢åŠ ä¸€ä¸ªèŠ‚ç‚¹
         os.add(new NodeB());
-        //´´½¨Ò»¸ö·ÃÎÊÕß
+        //åˆ›å»ºä¸€ä¸ªè®¿é—®è€…
         Visitor visitor = new VisitorA();
         os.action(visitor);
     }

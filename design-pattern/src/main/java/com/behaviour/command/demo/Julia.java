@@ -2,18 +2,18 @@ package com.behaviour.command.demo;
 //http://www.cnblogs.com/java-my-life/archive/2012/06/01/2526972.html
 public class Julia {
     public static void main(String[]args){
-        //´´½¨½ÓÊÕÕß¶ÔÏó
+        //åˆ›å»ºæ¥æ”¶è€…å¯¹è±¡
         AudioPlayer audioPlayer = new AudioPlayer();
-        //´´½¨ÃüÁî¶ÔÏó
+        //åˆ›å»ºå‘½ä»¤å¯¹è±¡
         Command playCommand = new PlayCommand(audioPlayer);
         Command rewindCommand = new RewindCommand(audioPlayer);
         Command stopCommand = new StopCommand(audioPlayer);
-        //´´½¨ÇëÇóÕß¶ÔÏó
+        //åˆ›å»ºè¯·æ±‚è€…å¯¹è±¡
         Keypad keypad = new Keypad();
         keypad.setPlayCommand(playCommand);
         keypad.setRewindCommand(rewindCommand);
         keypad.setStopCommand(stopCommand);
-        //²âÊÔ
+        //æµ‹è¯•
         keypad.play();
         keypad.rewind();
         keypad.stop();

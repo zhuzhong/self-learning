@@ -25,7 +25,7 @@ public class EnoughCopy {
        // System.out.println(cb.get());
 
         char[] cs = new char[3];
-        cb.get(cs); //读入
+        cb.get(cs); 
 
         System.out.println("second="+cb.toString());
         System.out.println(cs);
