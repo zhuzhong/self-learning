@@ -3,15 +3,15 @@
  */
 package chapter10.p144;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * @author snoopy
  *
  */
-public class StackImplTest extends TestCase{
+public class StackImplTest{
 
-	
+	@Test
 	public void testPush(){
 		StackImpl stack = new StackImpl(300);
 		for (int i = 0; i < 120; i++) {
@@ -25,7 +25,7 @@ public class StackImplTest extends TestCase{
 	}
 	
 	
-	
+	@Test
 	public void testPop(){
 		StackImpl stack = new StackImpl(300);
 		for (int i = 0; i < 120; i++) {
